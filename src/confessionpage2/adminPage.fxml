@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.AdminPageController">
+   <children>
+      <Label layoutX="490.0" layoutY="34.0" text="This is admin page" />
+      <TableView fx:id="tableView" layoutX="8.0" layoutY="73.0" prefHeight="618.0" prefWidth="1062.0">
+        <columns>
+            <TableColumn fx:id="idCol" prefWidth="71.2000093460083" text="ID" />
+          <TableColumn fx:id="confessionCol" prefWidth="548.8000335693359" text="Confession" />
+            <TableColumn fx:id="replyIDCol" prefWidth="90.39996337890625" text="ReplyID" />
+            <TableColumn fx:id="dateCol" prefWidth="156.0" text="Date" />
+            <TableColumn fx:id="editCol" prefWidth="103.99993896484375" text="Approve" />
+            <TableColumn fx:id="editCol1" prefWidth="92.800048828125" text="Reject" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
