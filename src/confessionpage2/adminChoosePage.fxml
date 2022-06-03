@@ -7,12 +7,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="confessionpage2.AdminChoosePageController">
    <children>
-      <Button fx:id="pendingButton" layoutX="419.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="222.0" text="Pending Confession">
+      <Button fx:id="pendingButton" layoutX="419.0" layoutY="185.0" mnemonicParsing="false" onAction="#pendingPage" prefHeight="45.0" prefWidth="222.0" text="Pending Confession">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="postedButton" layoutX="419.0" layoutY="350.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="222.0" text="Posted Confession">
+      <Button fx:id="postedButton" layoutX="419.0" layoutY="350.0" mnemonicParsing="false" onAction="#postedPage" prefHeight="45.0" prefWidth="222.0" text="Posted Confession">
          <font>
             <Font size="18.0" />
          </font>

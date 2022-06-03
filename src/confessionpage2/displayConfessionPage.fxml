@@ -18,9 +18,9 @@
       <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" prefHeight="539.0" prefWidth="1062.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="81.59997367858887" text="ID" />
-          <TableColumn fx:id="confessionCol" prefWidth="751.1999740600586" text="CONFESSION" />
-            <TableColumn fx:id="replyIDCol" prefWidth="95.199951171875" text="ReplyID" />
-            <TableColumn fx:id="dateCol" prefWidth="134.39996337890625" text="DATE" />
+          <TableColumn fx:id="confessionCol" prefWidth="735.1999740600586" text="CONFESSION" />
+            <TableColumn fx:id="replyIDCol" prefWidth="91.199951171875" text="ReplyID" />
+            <TableColumn fx:id="dateCol" prefWidth="154.4000244140625" text="DATE" />
         </columns>
       </TableView>
       <Label layoutX="199.0" layoutY="55.0" text="Search">

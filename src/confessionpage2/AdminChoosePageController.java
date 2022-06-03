@@ -34,7 +34,7 @@ public class AdminChoosePageController {
     private Parent root;
 
     public void pendingPage(ActionEvent event) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("adminLoginPage.fxml"));
+        root = FXMLLoader.load(getClass().getResource("displayPendingConf.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

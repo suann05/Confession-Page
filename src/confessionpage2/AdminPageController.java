@@ -4,6 +4,7 @@
  */
 package confessionpage2;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -49,6 +52,8 @@ public class AdminPageController implements Initializable {
     private TableColumn<Confession, String> editCol;
     @FXML
     private TableColumn<Confession, String> editCol1;
+    @FXML
+    private Button backButton;
     
     
     private Stage stage;
@@ -189,6 +194,14 @@ public class AdminPageController implements Initializable {
          tableView.setItems(confessionList);
          
          
+    }
+    
+    public void backButton(ActionEvent event) throws IOException{ //a method to go to userConfessionPage.fxml
+        root = FXMLLoader.load(getClass().getResource("adminChoosePage.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
         
     }

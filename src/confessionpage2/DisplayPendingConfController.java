@@ -4,6 +4,7 @@
  */
 package confessionpage2;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,10 +15,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,6 +45,8 @@ public class DisplayPendingConfController implements Initializable {
     private TableColumn<Confession, String> replyidCol;
     @FXML
     private TableColumn<Confession, String> dateCol;
+    @FXML
+    private Button backButton;
     
     private Stage stage;
     private Scene scene;
@@ -95,5 +102,13 @@ public class DisplayPendingConfController implements Initializable {
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         
     }   
+    
+    public void backButton(ActionEvent event) throws IOException{ //a method to go to userConfessionPage.fxml
+        root = FXMLLoader.load(getClass().getResource("adminChoosePage.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
     
 }

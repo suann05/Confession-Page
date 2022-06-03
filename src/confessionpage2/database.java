@@ -33,6 +33,11 @@ public class database {
     static Scene scene;
     static Parent root;
     
+    static Queue<String> confID = new Queue<>();
+    static Queue<String> confConf = new Queue<>();
+    static Queue<String> confReplyID = new Queue<>();
+    static Queue<String> confDate = new Queue<>();
+    
     public static void insertConfession(ActionEvent event,String id,String confession,String date)throws SQLException{ //a method to insert the confession from user into database
         
         Connection connection = null;
@@ -338,6 +343,7 @@ public class database {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement spamCheck = null;
+        PreparedStatement psCheckIDExists = null;
         ResultSet resultSet = null;
         
         try{
@@ -349,7 +355,6 @@ public class database {
             
             
             if(resultSet.isBeforeFirst()){
-                //System.out.println("User already exists");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Please submit a different content");
                 alert.show();
@@ -363,6 +368,13 @@ public class database {
                         alert.setContentText("Please check your content.");
                         alert.show();
                 }else{
+                    
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+                    psCheckIDExists = connection.prepareStatement("SELECT * FROM confession WHERE id=?");
+                    psCheckIDExists.setString(1, replyid);
+                    resultSet = psCheckIDExists.executeQuery();
+            
+                    if(resultSet.isBeforeFirst()){
                     connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
                     preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
                     preparedStatement.setString(1, id);
@@ -371,6 +383,25 @@ public class database {
                     preparedStatement.setString(4, date);
                
                     preparedStatement.executeUpdate();
+                    
+                    confID.enqueue(id);
+                    confConf.enqueue(confession);
+                    confReplyID.enqueue(replyid);
+                    confDate.enqueue(date); 
+                    
+                    System.out.println(confID.toString());
+                    System.out.println(confConf.toString());
+                    System.out.println(confReplyID.toString());
+                    System.out.println(confDate.toString());
+                    
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
+                    alert.show(); 
+                }else{
+                      Alert alert = new Alert(Alert.AlertType.ERROR);
+                      alert.setContentText("Reply ID doesn't exists.");
+                      alert.show();  
+                    }
                 }
                 }
 

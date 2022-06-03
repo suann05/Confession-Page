@@ -4,6 +4,10 @@
  */
 package confessionpage2;
 
+import static confessionpage2.database.confConf;
+import static confessionpage2.database.confDate;
+import static confessionpage2.database.confID;
+import static confessionpage2.database.confReplyID;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -61,7 +65,7 @@ public class UserConfessionPageController{
     DateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");  
     String strDate = formatter.format(date);
     
-    JSONArray jrr = new JSONArray();
+    //JSONArray jrr = new JSONArray();
     
     Queue<String> confID = new Queue<>();
     Queue<String> confConf = new Queue<>();
@@ -71,14 +75,14 @@ public class UserConfessionPageController{
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     
-    String word = "fuck";
+    //String word = "fuck";
     
     public void submitConfession(ActionEvent event) throws SQLException, IOException{ //a method to store the confession to the database
         Random rand = new Random();
         int num = rand.nextInt(50000);
         String id = "UM"+String.valueOf(num);
         
-        JSONObject objDetails = new JSONObject();
+        /*JSONObject objDetails = new JSONObject();
         JSONObject obj = new JSONObject();
         JSONParser jp = new JSONParser();
         
@@ -105,29 +109,20 @@ public class UserConfessionPageController{
             file.close();
         }catch(Exception e){
             System.out.println("Error");
-        }        
+        }        */
         
         
-        System.out.println(jrr);
+        //System.out.println(jrr);
         
-        
-                confID.enqueue(id);
+        confID.enqueue(id);
         confConf.enqueue(confessionTextField.getText());
         confReplyID.enqueue(idTextField.getText());
         confDate.enqueue(strDate);
         
-        
-        
-        System.out.println(confID.toString());
-        System.out.println(confConf.toString());
-        System.out.println(confReplyID.toString());
-        System.out.println(confDate.toString());
-        
-        
         database.insertPendingConf(event, confID.getElement(), confConf.getElement(), confReplyID.getElement(), confDate.getElement());
         
         database.timeScheduling();
-        System.out.println("hello");
+        
             
            
         
