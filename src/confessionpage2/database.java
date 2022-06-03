@@ -10,6 +10,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -234,7 +237,7 @@ public class database {
                 while(resultSet.next()){
                     String retrivedPassword = resultSet.getString("password");
                     if(retrivedPassword.equals(password)){
-                         changeScene(event,username,"adminPage.fxml"); 
+                         changeScene(event,username,"adminChoosePage.fxml"); 
                         
                     }
                     else{
@@ -329,6 +332,307 @@ public class database {
             
         }
     }
+    
+    public static void insertPendingConf(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException{ //a method to insert the confession from user into database
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement spamCheck = null;
+        ResultSet resultSet = null;
+        
+        try{
+            
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            spamCheck = connection.prepareStatement("SELECT * FROM pendingconf WHERE confession = ?");
+            spamCheck.setString(1, confession);
+            resultSet = spamCheck.executeQuery();
+            
+            
+            if(resultSet.isBeforeFirst()){
+                //System.out.println("User already exists");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Please submit a different content");
+                alert.show();
+                
+            }else{
+                String word = "fuck";
+                String[] array = confession.split(" ");
+                for(int i=0;i<array.length;i++){
+                if(array[i].equalsIgnoreCase(word)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Please check your content.");
+                        alert.show();
+                }else{
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
+                    preparedStatement.setString(1, id);
+                    preparedStatement.setString(2, confession);
+                    preparedStatement.setString(3,replyid);
+                    preparedStatement.setString(4, date);
+               
+                    preparedStatement.executeUpdate();
+                }
+                }
+
+            
+            
+            }
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+    }
+    
+    public static void timeScheduling() throws SQLException{
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+        Statement stmt = con.createStatement();
+        String query = "select count(*) from pendingconf";
+        ResultSet rs = stmt.executeQuery(query);
+        rs.next();
+        int count = rs.getInt(1);
+        System.out.println("Number of records in the cricketers_data table: "+count);
+        
+        if(count<=5){
+        
+        Timer timer = new Timer();
+        
+        TimerTask task = new TimerTask(){
+
+            @Override
+            public void run() {
+                
+                    try {
+                        insertConfession2();
+                        removeConfession2();
+                        System.out.println("done");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("error");
+                    }
+                
+            }
+        
+        };
+        
+        timer.schedule(task, 15000);
+            
+        }else if(count<=10){
+            
+            Timer timer = new Timer();
+        
+            TimerTask task = new TimerTask(){
+                @Override
+                public void run() {
+                    try {
+                        insertConfession2();
+                        removeConfession2();
+                        System.out.println("done");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("error");
+                    }
+                }
+                
+            };
+            
+            timer.schedule(task, 600000);
+            
+        }else if(count>10){
+            
+            Timer timer = new Timer();
+        
+            TimerTask task = new TimerTask(){
+                @Override
+                public void run() {
+                    try {
+                        insertConfession2();
+                        removeConfession2();
+                        System.out.println("done");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("error");
+                    }
+                }
+                
+            };
+            
+            timer.schedule(task, 300000);
+            
+        }else{
+            System.out.println("oops");
+        }
+        
+        
+    }
+    
+    public static void insertConfession2()throws SQLException{ //a method to insert the confession from user into database
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            preparedStatement = connection.prepareStatement("INSERT INTO confession (id,confession,replyid,date) SELECT idconfession,confession,replyid,date FROM pendingconf");
+               
+            preparedStatement.executeUpdate();
+               
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+    }
+    
+        public static void removeConfession2()throws SQLException{ //a method to insert the confession from user into database
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            preparedStatement = connection.prepareStatement("DELETE FROM pendingconf");
+               
+            preparedStatement.executeUpdate();
+               
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+    }
+        
+        public static void checkSpam(String confession){
+            
+        }
+        
+        public static void removeReplyConfession(ActionEvent event,String id){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        PreparedStatement checkReplyID = null;
+        
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            preparedStatement = connection.prepareStatement("DELETE * FROM confession WHERE replyid = ?");
+            preparedStatement.setString(1, id);
+            int k = preparedStatement.executeUpdate();
+            
+            if(k==1){
+                System.out.println("done");
+                removeReplyConfession(event,id);
+            }
+            else
+                System.out.println("errorrrrrr");
+            /*if(k==1){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("THE CHANGES HAVE BEEN SAVED");
+            alert.show();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                   alert.setContentText("THERE IS AN ERROR");
+                   alert.show();
+            }*/
+            
+           
+            
+        }catch(SQLException e){
+            System.out.println("Error occured");
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+    }
+    
     
     
     

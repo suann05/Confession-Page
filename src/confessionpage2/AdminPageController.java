@@ -147,11 +147,12 @@ public class AdminPageController implements Initializable {
                         btn.setOnAction((ActionEvent event) -> {
                             try {    
                                 confession = tableView.getSelectionModel().getSelectedItem();
-                                query = "DELETE FROM `confession` WHERE confession = ?";
+                                query = "DELETE FROM `confession` WHERE id=?";
                                 connection = database.getConnect();
                                 preparedStatement = connection.prepareStatement(query);
-                                preparedStatement.setString(1, confession.getConfession());
+                                preparedStatement.setString(1, confession.getId());
                                 preparedStatement.executeUpdate();
+                                database.removeReplyConfession(event, confession.getId());
                                 refreshTable();
                             } catch (SQLException ex) {
                                 Logger.getLogger(AdminPageController.class.getName()).log(Level.SEVERE, null, ex);

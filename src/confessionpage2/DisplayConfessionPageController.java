@@ -116,10 +116,10 @@ public class DisplayConfessionPageController implements Initializable{
                     
                     if(Confession.getConfession().toLowerCase().indexOf(searchKeyword) > -1){
                        return true;
-                    /*}else if(Confession.getDate().toLowerCase().indexOf(searchKeyword) > -1){
+                    }else if(Confession.getDate().toLowerCase().indexOf(searchKeyword) > -1){
                        return true;
                     }else if(Confession.getId().toLowerCase().indexOf(searchKeyword) > -1){
-                       return true;*/
+                       return true;
                     }else{
                        return false;
                     }

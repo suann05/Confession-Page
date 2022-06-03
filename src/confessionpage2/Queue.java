@@ -31,6 +31,14 @@ public class Queue<E> {
     public E dequeue(){
         return list.removeFirst();
     }
+    
+    public E getElement(){
+        return list.getFirst();
+    }
+    
+    public E getElementAt(){
+        return list.getLast();
+    }
 
     @Override
     public String toString() {

@@ -48,13 +48,15 @@ public class Confession {
         this.date = date;
     }
 
-    public String getReplyID() {
+    public String getReplyid() {
         return replyid;
     }
 
-    public void setReplyID(String replyid) {
+    public void setReplyid(String replyid) {
         this.replyid = replyid;
     }
+
+    
     
     
     

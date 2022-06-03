@@ -24,6 +24,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.util.Date;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Timer;
+import java.util.TimerTask;
+import org.json.simple.parser.JSONParser;
+ 
 /**
  * FXML Controller class
  *
@@ -46,14 +59,129 @@ public class UserConfessionPageController{
     
     Date date = new Date();  
     DateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");  
-    String strDate = formatter.format(date);  
+    String strDate = formatter.format(date);
     
+    JSONArray jrr = new JSONArray();
     
-    public void submitConfession(ActionEvent event) throws SQLException{ //a method to store the confession to the database
+    Queue<String> confID = new Queue<>();
+    Queue<String> confConf = new Queue<>();
+    Queue<String> confReplyID = new Queue<>();
+    Queue<String> confDate = new Queue<>();
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    
+    String word = "fuck";
+    
+    public void submitConfession(ActionEvent event) throws SQLException, IOException{ //a method to store the confession to the database
         Random rand = new Random();
         int num = rand.nextInt(50000);
         String id = "UM"+String.valueOf(num);
-        if(confessionTextField.getText().isEmpty()==false && idTextField.getText().isEmpty()==true){
+        
+        JSONObject objDetails = new JSONObject();
+        JSONObject obj = new JSONObject();
+        JSONParser jp = new JSONParser();
+        
+        try{
+            
+            FileReader file = new FileReader("confession.json");
+            jrr = (JSONArray)jp.parse(file);
+            
+        }catch(Exception e){
+            System.out.println("error");
+        }
+        
+        objDetails.put("id", id);
+        objDetails.put("confession", confessionTextField.getText());
+        objDetails.put("replyid", idTextField.getText());
+        objDetails.put("date", strDate);
+        obj.put("Confession", objDetails);
+        jrr.add(objDetails);
+        
+        try{
+            FileWriter file = new FileWriter("confession.json");
+            file.write(jrr.toJSONString());
+            file.flush();
+            file.close();
+        }catch(Exception e){
+            System.out.println("Error");
+        }        
+        
+        
+        System.out.println(jrr);
+        
+        
+                confID.enqueue(id);
+        confConf.enqueue(confessionTextField.getText());
+        confReplyID.enqueue(idTextField.getText());
+        confDate.enqueue(strDate);
+        
+        
+        
+        System.out.println(confID.toString());
+        System.out.println(confConf.toString());
+        System.out.println(confReplyID.toString());
+        System.out.println(confDate.toString());
+        
+        
+        database.insertPendingConf(event, confID.getElement(), confConf.getElement(), confReplyID.getElement(), confDate.getElement());
+        
+        database.timeScheduling();
+        System.out.println("hello");
+            
+           
+        
+        /*confID.enqueue(id);
+        confConf.enqueue(confessionTextField.getText());
+        confReplyID.enqueue(idTextField.getText());
+        confDate.enqueue(strDate);
+        
+        
+        
+        System.out.println(confID.toString());
+        System.out.println(confConf.toString());
+        System.out.println(confReplyID.toString());
+        System.out.println(confDate.toString());
+        
+        
+        database.insertPendingConf(event, confID.getElement(), confConf.getElement(), confReplyID.getElement(), confDate.getElement());*/
+        
+        
+        
+        /*Timer timer = new Timer();
+        
+        TimerTask task = new TimerTask(){
+            @Override
+            public void run() {
+                
+                /*try{
+                 DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+                 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+                 Statement stmt = con.createStatement();
+                 String query = "select count(*) from pendingconf";
+                 ResultSet rs = stmt.executeQuery(query);
+                 rs.next();
+                 int count = rs.getInt(1);
+                 System.out.println("Number of records in the cricketers_data table: "+count);
+                 
+                }catch(Exception e){
+                    System.out.println("Error");
+                }*/
+                
+                //System.out.println("hello world");
+                
+                
+                
+            //}
+            
+        //};
+        
+        //timer.schedule(task, 10);
+        
+        /*database.timeScheduling();
+        System.out.println("hello");*/
+        
+        /*if(confessionTextField.getText().isEmpty()==false && idTextField.getText().isEmpty()==true){
               
             database.insertConfession(event,id, confessionTextField.getText(),strDate);
                    
@@ -66,8 +194,8 @@ public class UserConfessionPageController{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Please enter your confession");
                 alert.show();
-            }
-
+            }*/
+         
     }
     
     public void confessionPage(ActionEvent event) throws IOException{ //a method to back to displayConfessionPage.fxml
