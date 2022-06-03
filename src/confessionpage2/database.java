@@ -468,7 +468,7 @@ public class database {
         
         };
         
-        timer.schedule(task, 15000);
+        timer.schedule(task, 900000);
             
         }else if(count<=10){
             
