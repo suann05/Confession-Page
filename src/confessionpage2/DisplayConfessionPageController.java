@@ -30,6 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -53,6 +54,10 @@ public class DisplayConfessionPageController implements Initializable{
     private TableColumn<Confession, String> dateCol;
     @FXML
     private TextField searchTextField;
+    @FXML
+    private ImageView displayImage;
+    @FXML
+    private Button button;
     
     private Stage stage;
     private Scene scene;
@@ -136,6 +141,11 @@ public class DisplayConfessionPageController implements Initializable{
             e.printStackTrace();
         }
         
+    }
+    
+    public void showImage(ActionEvent event) throws IOException{
+        confession = tableView.getSelectionModel().getSelectedItem();
+        displayImage.setImage(database.getImageById(event, confession.getId()));
     }
     
 }

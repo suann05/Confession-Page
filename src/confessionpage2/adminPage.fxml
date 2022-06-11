@@ -4,20 +4,24 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.AdminPageController">
    <children>
       <Label layoutX="490.0" layoutY="34.0" text="This is admin page" />
-      <TableView fx:id="tableView" layoutX="8.0" layoutY="73.0" prefHeight="618.0" prefWidth="1062.0">
+      <TableView fx:id="tableView" layoutX="8.0" layoutY="73.0" prefHeight="618.0" prefWidth="869.0">
         <columns>
             <TableColumn fx:id="idCol" prefWidth="85.60000324249268" text="ID" />
-          <TableColumn fx:id="confessionCol" prefWidth="648.7999954223633" text="Confession" />
-            <TableColumn fx:id="replyIDCol" prefWidth="118.39996337890625" text="ReplyID" />
-            <TableColumn fx:id="dateCol" prefWidth="125.60003662109375" text="Date" />
-            <TableColumn fx:id="editCol1" prefWidth="85.599853515625" text="Reject" />
+          <TableColumn fx:id="confessionCol" prefWidth="400.0" text="Confession" />
+            <TableColumn fx:id="replyIDCol" prefWidth="85.0" text="ReplyID" />
+            <TableColumn fx:id="dateCol" prefWidth="140.0" text="Date" />
+            <TableColumn fx:id="editCol" text="Approve" />
+            <TableColumn fx:id="editCol1" text="Reject" />
         </columns>
       </TableView>
       <Button fx:id="backButton" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#backButton" text="&lt;Back" />
+      <Button fx:id="button" layoutX="931.0" layoutY="347.0" mnemonicParsing="false" onAction="#showImage" text="Show Image" />
+      <ImageView fx:id="displayImage" fitHeight="158.0" fitWidth="189.0" layoutX="877.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
