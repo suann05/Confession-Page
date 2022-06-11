@@ -29,6 +29,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -54,6 +55,8 @@ public class AdminPageController implements Initializable {
     private TableColumn<Confession, String> editCol1;
     @FXML
     private Button backButton;
+    @FXML
+    private ImageView displayImage;
     
     
     private Stage stage;
@@ -195,6 +198,11 @@ public class AdminPageController implements Initializable {
          tableView.setItems(confessionList);
          
          
+    }
+    
+    public void showImage(ActionEvent event) throws IOException{
+        confession = tableView.getSelectionModel().getSelectedItem();
+        displayImage.setImage(database.getImageById(event, confession.getId()));
     }
     
     public void backButton(ActionEvent event) throws IOException{ //a method to go to userConfessionPage.fxml

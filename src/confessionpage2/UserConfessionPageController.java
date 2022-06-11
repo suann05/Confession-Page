@@ -28,8 +28,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.util.Date;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.sql.Connection;
@@ -39,7 +37,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Timer;
 import java.util.TimerTask;
-import org.json.simple.parser.JSONParser;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
  
 /**
  * FXML Controller class
@@ -56,6 +56,12 @@ public class UserConfessionPageController{
     private Button submitButton;
     @FXML
     private Button backButton;
+    @FXML
+    private TextArea imageFilePath;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private Button browseButton;
     
     private Stage stage;
     private Scene scene;
@@ -198,6 +204,15 @@ public class UserConfessionPageController{
                 alert.show();
             }*/
          
+    }
+    
+    public void browseFiles(ActionEvent event){
+        database.fileBrowser(event);
+        if(database.file!=null){
+            imageFilePath.setText(database.file.getAbsolutePath());
+            Image image = new Image(database.file.toURI().toString(),1080,1080,true,true);
+            imageView.setImage(image);
+        }
     }
     
     public void confessionPage(ActionEvent event) throws IOException{ //a method to back to displayConfessionPage.fxml

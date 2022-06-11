@@ -4,7 +4,12 @@
  */
 package confessionpage2;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,6 +26,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -38,12 +45,16 @@ public class database {
     static Queue<String> confReplyID = new Queue<>();
     static Queue<String> confDate = new Queue<>();
     
-    public static void insertConfession(ActionEvent event,String id,String confession,String date)throws SQLException{ //a method to insert the confession from user into database
+    static File file;
+    static FileChooser fileChooser;
+    
+    public static void insertConfession(ActionEvent event,String id,String confession,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement spamCheck = null;
         ResultSet resultSet = null;
+        FileInputStream fs =null;
         
         try{
             
@@ -70,11 +81,13 @@ public class database {
                     
                     
                     connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
+                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date,image) VALUES (?,?,?,?,?)");
                     preparedStatement.setString(1, id);
                     preparedStatement.setString(2, confession);
                     preparedStatement.setString(3,null);
                     preparedStatement.setString(4, date);
+                    fs = new FileInputStream(file);
+                    preparedStatement.setBinaryStream(5, fs, (int)file.length());
                
                     preparedStatement.executeUpdate();
                     
@@ -361,13 +374,14 @@ public class database {
         }
     }
     
-    public static void insertPendingConf(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException{ //a method to insert the confession from user into database
+    public static void insertPendingConf(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement spamCheck = null;
         PreparedStatement psCheckIDExists = null;
         ResultSet resultSet = null;
+        FileInputStream fs =null;
         
         try{
             
@@ -399,11 +413,13 @@ public class database {
             
                     if(resultSet.isBeforeFirst()){
                     connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
+                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date,image) VALUES (?,?,?,?,?)");
                     preparedStatement.setString(1, id);
                     preparedStatement.setString(2, confession);
                     preparedStatement.setString(3,replyid);
                     preparedStatement.setString(4, date);
+                    fs = new FileInputStream(file);
+                    preparedStatement.setBinaryStream(5, fs, (int)file.length());
                
                     preparedStatement.executeUpdate();
                     
@@ -856,7 +872,62 @@ public class database {
             
         }
         
-    } 
+    }
+    
+    public static void fileBrowser(ActionEvent event){
+        fileChooser = new FileChooser();
+        file = fileChooser.showOpenDialog(stage);
+    }
+    
+    public static Image getImageById(ActionEvent event,String id) throws IOException { //for displaying image from confession2 database
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Image image = null;
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root"); //connect to your databases, javafx-loginsigup is my scheme name, root is my user and root is my password 
+            preparedStatement = connection.prepareStatement("SELECT image FROM confession2 WHERE idconfession = ?"); 
+            preparedStatement.setString(1, id);
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                Blob blobImage = resultSet.getBlob("image");
+                InputStream is = blobImage.getBinaryStream();
+                image = new Image(is);
+                is.close();
+            }
+            resultSet.close();
+        
+        }catch (SQLException ex) {
+            Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return image;
+    }
+    
+    public static Image getImageById2(ActionEvent event,String id) throws IOException { //for displaying image from pendingconf database
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Image image = null;
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root"); //connect to your databases, javafx-loginsigup is my scheme name, root is my user and root is my password 
+            preparedStatement = connection.prepareStatement("SELECT image FROM pendingconf WHERE idconfession = ?"); 
+            preparedStatement.setString(1, id);
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                Blob blobImage = resultSet.getBlob("image");
+                InputStream is = blobImage.getBinaryStream();
+                image = new Image(is);
+                is.close();
+            }
+            resultSet.close();
+        
+        }catch (SQLException ex) {
+            Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return image;
+    }
     
     
     

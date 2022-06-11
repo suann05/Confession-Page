@@ -5,27 +5,29 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.DisplayConfessionPageController">
    <children>
-      <Label layoutX="434.0" layoutY="14.0" prefHeight="18.0" prefWidth="230.0" text="This page is to display the confession" />
       <Button fx:id="submitButton" layoutX="383.0" layoutY="646.0" mnemonicParsing="false" onAction="#confessionPage" text="Click here to submit your confession">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" prefHeight="539.0" prefWidth="1062.0">
+      <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" prefHeight="539.0" prefWidth="805.0">
         <columns>
-          <TableColumn fx:id="idCol" prefWidth="81.59997367858887" text="ID" />
-          <TableColumn fx:id="confessionCol" prefWidth="735.1999740600586" text="CONFESSION" />
-            <TableColumn fx:id="replyIDCol" prefWidth="91.199951171875" text="ReplyID" />
-            <TableColumn fx:id="dateCol" prefWidth="154.4000244140625" text="DATE" />
+          <TableColumn fx:id="idCol" prefWidth="81.59997367858887" style="-fx-background-color: eae7dc;" text="ID" />
+          <TableColumn fx:id="confessionCol" prefWidth="475.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
+            <TableColumn fx:id="replyIDCol" prefWidth="91.199951171875" style="-fx-background-color: eae7dc;" text="ReplyID" />
+            <TableColumn fx:id="dateCol" prefWidth="154.4000244140625" style="-fx-background-color: eae7dc;" text="DATE" />
         </columns>
       </TableView>
-      <Label layoutX="199.0" layoutY="55.0" text="Search">
+      <Button fx:id="button" layoutX="921.0" layoutY="337.0" mnemonicParsing="false" onAction="#showImage" text="Show Image" />
+      <ImageView fx:id="displayImage" fitHeight="183.0" fitWidth="227.0" layoutX="833.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="199.0" layoutY="55.0" text="Search" textFill="#5d5c61">
          <font>
-            <Font size="18.0" />
+            <Font name="Georgia Bold" size="18.0" />
          </font></Label>
       <TextField fx:id="searchTextField" layoutX="272.0" layoutY="52.0" prefHeight="34.0" prefWidth="534.0" />
    </children>

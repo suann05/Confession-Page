@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -47,6 +48,8 @@ public class DisplayPendingConfController implements Initializable {
     private TableColumn<Confession, String> dateCol;
     @FXML
     private Button backButton;
+    @FXML
+    private ImageView displayImage;
     
     private Stage stage;
     private Scene scene;
@@ -101,7 +104,12 @@ public class DisplayPendingConfController implements Initializable {
         replyidCol.setCellValueFactory(new PropertyValueFactory<>("replyid"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         
-    }   
+    }
+    
+    public void showImage(ActionEvent event) throws IOException{
+        confession = tableView.getSelectionModel().getSelectedItem();
+        displayImage.setImage(database.getImageById2(event, confession.getId()));
+    }
     
     public void backButton(ActionEvent event) throws IOException{ //a method to go to userConfessionPage.fxml
         root = FXMLLoader.load(getClass().getResource("adminChoosePage.fxml"));
