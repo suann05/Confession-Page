@@ -4,8 +4,6 @@
  */
 package confessionpage2;
 
-import static confessionpage2.database.removeDeleteConf;
-import static confessionpage2.database.removeReplyConfession;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -118,7 +116,7 @@ public class AdminPageController implements Initializable {
             // make cell containing buttons
             final TableCell<Confession, String> cell = new TableCell<Confession, String>() {
                 
-                private final Button btn = new Button("Reject");
+                private final Button btn = new Button("Remove");
                 
                 {
                         btn.setOnAction((ActionEvent event) -> {

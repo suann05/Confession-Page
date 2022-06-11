@@ -13,11 +13,10 @@
       <TableView fx:id="tableView" layoutX="8.0" layoutY="73.0" prefHeight="618.0" prefWidth="869.0">
         <columns>
             <TableColumn fx:id="idCol" prefWidth="85.60000324249268" text="ID" />
-          <TableColumn fx:id="confessionCol" prefWidth="400.0" text="Confession" />
-            <TableColumn fx:id="replyIDCol" prefWidth="85.0" text="ReplyID" />
-            <TableColumn fx:id="dateCol" prefWidth="140.0" text="Date" />
-            <TableColumn fx:id="editCol" text="Approve" />
-            <TableColumn fx:id="editCol1" text="Reject" />
+          <TableColumn fx:id="confessionCol" prefWidth="492.0" text="Confession" />
+            <TableColumn fx:id="replyIDCol" prefWidth="94.39996337890625" text="ReplyID" />
+            <TableColumn fx:id="dateCol" prefWidth="128.0" text="Date" />
+            <TableColumn fx:id="editCol1" prefWidth="71.2000732421875" text="Remove" />
         </columns>
       </TableView>
       <Button fx:id="backButton" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#backButton" text="&lt;Back" />
