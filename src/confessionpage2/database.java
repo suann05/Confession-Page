@@ -42,39 +42,62 @@ public class database {
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        PreparedStatement spamCheck = null;
         ResultSet resultSet = null;
-        String word = "fuck";
         
         try{
+            
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-            preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.confession(id,confession,date) VALUES (?,?,?)");
-            preparedStatement.setString(1, id);
-            preparedStatement.setString(2, confession);
-            preparedStatement.setString(3, date);
+            spamCheck = connection.prepareStatement("SELECT * FROM pendingconf WHERE confession = ?");
+            spamCheck.setString(1, confession);
+            resultSet = spamCheck.executeQuery();
+            
+            
+            if(resultSet.isBeforeFirst()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Please submit a different content");
+                alert.show();
+                
+            }else{
+                String word = "fuck";
+                String[] array = confession.split(" ");
+                for(int i=0;i<array.length;i++){
+                if(array[i].equalsIgnoreCase(word)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Please check your content.");
+                        alert.show();
+                }else{
+                    
+                    
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
+                    preparedStatement.setString(1, id);
+                    preparedStatement.setString(2, confession);
+                    preparedStatement.setString(3,null);
+                    preparedStatement.setString(4, date);
                
-               int k = preparedStatement.executeUpdate();
-               
-               if(k==1){
-                   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                   alert.setContentText("YOUR SUBMISSION HAVE BEEN RECORDED");
-                   alert.show();
-                   
-                   String[] array = confession.split(" ");
-                   for(int i=0;i<array.length;i++){
-                   if(array[i].equalsIgnoreCase(word)){
-                       connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-                       preparedStatement = connection.prepareStatement("delete from confession where id=? and confession = ? and date=?");
-                       preparedStatement.setString(1, id);
-                       preparedStatement.setString(2, confession);
-                       preparedStatement.setString(3,date);
-                       preparedStatement.executeUpdate();
-                   }
-                   }
-               }else{
-                   Alert alert = new Alert(Alert.AlertType.ERROR);
-                   alert.setContentText("THERE IS AN ERROR");
-                   alert.show();
-               }
+                    preparedStatement.executeUpdate();
+                    
+                    confID.enqueue(id);
+                    confConf.enqueue(confession);
+                    confReplyID.enqueue(null);
+                    confDate.enqueue(date); 
+                    
+                    System.out.println(confID.toString());
+                    System.out.println(confConf.toString());
+                    System.out.println(confReplyID.toString());
+                    System.out.println(confDate.toString());
+                    
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
+                    alert.show(); 
+                }
+                }
+                }
+
+            
+            
+            
             
         }catch(SQLException e){
             e.printStackTrace();
@@ -370,7 +393,7 @@ public class database {
                 }else{
                     
                     connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-                    psCheckIDExists = connection.prepareStatement("SELECT * FROM confession WHERE id=?");
+                    psCheckIDExists = connection.prepareStatement("SELECT * FROM confession2 WHERE idconfession=?");
                     psCheckIDExists.setString(1, replyid);
                     resultSet = psCheckIDExists.executeQuery();
             
@@ -468,7 +491,7 @@ public class database {
         
         };
         
-        timer.schedule(task, 900000);
+        timer.schedule(task, 10000);
             
         }else if(count<=10){
             
@@ -527,7 +550,7 @@ public class database {
         
         try{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-            preparedStatement = connection.prepareStatement("INSERT INTO confession (id,confession,replyid,date) SELECT idconfession,confession,replyid,date FROM pendingconf");
+            preparedStatement = connection.prepareStatement("INSERT INTO confession2 (idconfession,confession,replyid,date) SELECT idconfession,confession,replyid,date FROM pendingconf");
                
             preparedStatement.executeUpdate();
                
@@ -559,6 +582,7 @@ public class database {
             
         }
     }
+    
     
         public static void removeConfession2()throws SQLException{ //a method to insert the confession from user into database
         
@@ -600,10 +624,7 @@ public class database {
             
         }
     }
-        
-        public static void checkSpam(String confession){
-            
-        }
+       
         
         public static void removeReplyConfession(ActionEvent event,String id){
         Connection connection = null;
@@ -612,28 +633,29 @@ public class database {
         PreparedStatement checkReplyID = null;
         
         try{
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-            preparedStatement = connection.prepareStatement("DELETE * FROM confession WHERE replyid = ?");
+            connection = database.getConnect();
+            preparedStatement = connection.prepareStatement("DELETE FROM `confession` WHERE replyid=?");
             preparedStatement.setString(1, id);
-            int k = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             
-            if(k==1){
-                System.out.println("done");
-                removeReplyConfession(event,id);
-            }
-            else
-                System.out.println("errorrrrrr");
-            /*if(k==1){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("THE CHANGES HAVE BEEN SAVED");
-            alert.show();
-            }else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                   alert.setContentText("THERE IS AN ERROR");
-                   alert.show();
-            }*/
+            String query = "INSERT INTO deleteconf (replyid) VALUES (?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, id);
+            preparedStatement.executeUpdate();
             
-           
+            query = "SELECT * FROM deleteconf";
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            String confID = resultSet.getString("replyid");
+                if(confID==null){
+                    System.out.println("doneeeeee");
+                    
+                }else{
+                    removeReplyConfession(event,confID);
+                }
+            
+              //removeDeleteConf(event);*/
             
         }catch(SQLException e){
             System.out.println("Error occured");
@@ -663,6 +685,178 @@ public class database {
             
         }
     }
+    public static void removeReplyConfession2(ActionEvent event,String id){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        PreparedStatement checkReplyID = null;
+        
+        try{
+            connection = database.getConnect();
+            /*preparedStatement = connection.prepareStatement("SELECT id FROM `confession` WHERE replyid=?");
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            String abc = resultSet.getString("id");
+            System.out.println(abc);*/
+            preparedStatement = connection.prepareStatement("DELETE FROM `confession` WHERE replyid=?");
+            preparedStatement.setString(1, id);
+            preparedStatement.executeUpdate();
+            
+            
+        }catch(SQLException e){
+            System.out.println("Error occured");
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+    }
+    
+        
+    public static void insertDeleteConf(ActionEvent event,String id){
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            preparedStatement = connection.prepareStatement("INSERT INTO deleteconf (replyid) VALUES (?)");
+            preparedStatement.setString(1, id);
+            preparedStatement.executeUpdate();
+               
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+        
+    }
+    
+    public static void removeDeleteConf(ActionEvent event)throws SQLException{ //a method to insert the confession from user into database
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            preparedStatement = connection.prepareStatement("DELETE FROM deleteconf");
+               
+            preparedStatement.executeUpdate();
+               
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+    }
+    
+    public static void findReplyID(ActionEvent event,String id){
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            preparedStatement = connection.prepareStatement("INSERT INTO deleteconf (replyid) VALUES (?)");
+            preparedStatement.setString(1, id);
+            preparedStatement.executeUpdate();
+               
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+        
+    } 
     
     
     

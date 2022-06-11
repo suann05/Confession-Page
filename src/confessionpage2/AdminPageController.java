@@ -4,6 +4,8 @@
  */
 package confessionpage2;
 
+import static confessionpage2.database.removeDeleteConf;
+import static confessionpage2.database.removeReplyConfession;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -49,8 +51,6 @@ public class AdminPageController implements Initializable {
     @FXML
     private TableColumn<Confession, String> dateCol;
     @FXML
-    private TableColumn<Confession, String> editCol;
-    @FXML
     private TableColumn<Confession, String> editCol1;
     @FXML
     private Button backButton;
@@ -72,14 +72,14 @@ public class AdminPageController implements Initializable {
          try {
             confessionList.clear();
             
-            query = "SELECT * FROM confession ORDER BY idconfession DESC";
+            query = "SELECT * FROM confession2 ORDER BY date DESC";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             
             while (resultSet.next()){
                 confessionList.add(new Confession(
                         
-                        resultSet.getString("id"),
+                        resultSet.getString("idconfession"),
                         resultSet.getString("confession"),
                         resultSet.getString("replyid"),
                         resultSet.getString("date")
@@ -111,7 +111,7 @@ public class AdminPageController implements Initializable {
         replyIDCol.setCellValueFactory(new PropertyValueFactory<>("replyid"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         
-        Callback<TableColumn<Confession, String>, TableCell<Confession, String>> cellFactory = (TableColumn<Confession, String> param) -> {
+        /*Callback<TableColumn<Confession, String>, TableCell<Confession, String>> cellFactory = (TableColumn<Confession, String> param) -> {
             // make cell containing buttons
             final TableCell<Confession, String> cell = new TableCell<Confession, String>() {
                 
@@ -140,7 +140,7 @@ public class AdminPageController implements Initializable {
             };
 
             return cell;
-        };
+        };*/
         
         Callback<TableColumn<Confession, String>, TableCell<Confession, String>> cellFactory1 = (TableColumn<Confession, String> param) -> {
             // make cell containing buttons
@@ -150,23 +150,24 @@ public class AdminPageController implements Initializable {
                 
                 {
                         btn.setOnAction((ActionEvent event) -> {
-                            try {    
+                            
+                            try {
                                 confession = tableView.getSelectionModel().getSelectedItem();
-                                query = "DELETE FROM `confession` WHERE id=?";
                                 connection = database.getConnect();
+                                query = "DELETE FROM `confession2` WHERE idconfession=?"; 
                                 preparedStatement = connection.prepareStatement(query);
                                 preparedStatement.setString(1, confession.getId());
                                 preparedStatement.executeUpdate();
-                                database.removeReplyConfession(event, confession.getId());
                                 refreshTable();
+                                
+                                ObservableList<Confession> allConfession,singleConfession;
+                                allConfession=tableView.getItems();
+                                singleConfession = tableView.getSelectionModel().getSelectedItems();
+                                singleConfession.forEach(allConfession::remove);
                             } catch (SQLException ex) {
                                 Logger.getLogger(AdminPageController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             
-                            ObservableList<Confession> allConfession,singleConfession;
-                            allConfession=tableView.getItems();
-                                singleConfession = tableView.getSelectionModel().getSelectedItems();
-                                singleConfession.forEach(allConfession::remove);
                             
                         });
                     }
@@ -189,7 +190,7 @@ public class AdminPageController implements Initializable {
             return cell;
         };
         
-         editCol.setCellFactory(cellFactory);
+         //editCol.setCellFactory(cellFactory);
          editCol1.setCellFactory(cellFactory1);
          tableView.setItems(confessionList);
          

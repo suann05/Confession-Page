@@ -77,7 +77,7 @@ public class DisplayConfessionPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         connection = database.getConnect();
-        query = "SELECT * FROM confession ORDER BY idconfession DESC";
+        query = "SELECT * FROM confession2 ORDER BY DATE DESC";
         
         try{
             
@@ -86,7 +86,7 @@ public class DisplayConfessionPageController implements Initializable{
             
             while(queryOutput.next()){
                 
-                String queryID = queryOutput.getString("id");
+                String queryID = queryOutput.getString("idconfession");
                 String queryConfession = queryOutput.getString("confession");
                 String queryReplyID = queryOutput.getString("replyid");
                 String queryDate = queryOutput.getString("date");

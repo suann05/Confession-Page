@@ -119,7 +119,14 @@ public class UserConfessionPageController{
         confReplyID.enqueue(idTextField.getText());
         confDate.enqueue(strDate);
         
-        database.insertPendingConf(event, confID.getElement(), confConf.getElement(), confReplyID.getElement(), confDate.getElement());
+        if(idTextField.getText().isEmpty()==true&&confessionTextField.getText().isEmpty()==false)
+            database.insertConfession(event, confID.getElement(), confConf.getElement(),confDate.getElement());
+        else if(confessionTextField.getText().isEmpty()==true){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Please enter your confession.");
+            alert.show();
+        }else
+            database.insertPendingConf(event, confID.getElement(), confConf.getElement(), confReplyID.getElement(), confDate.getElement());
         
         database.timeScheduling();
         
