@@ -566,7 +566,7 @@ public class database {
         
         try{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-            preparedStatement = connection.prepareStatement("INSERT INTO confession2 (idconfession,confession,replyid,date) SELECT idconfession,confession,replyid,date FROM pendingconf");
+            preparedStatement = connection.prepareStatement("INSERT INTO confession2 (idconfession,confession,replyid,date,image) SELECT idconfession,confession,replyid,date,image FROM pendingconf");
                
             preparedStatement.executeUpdate();
                
