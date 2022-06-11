@@ -111,37 +111,6 @@ public class AdminPageController implements Initializable {
         replyIDCol.setCellValueFactory(new PropertyValueFactory<>("replyid"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         
-        /*Callback<TableColumn<Confession, String>, TableCell<Confession, String>> cellFactory = (TableColumn<Confession, String> param) -> {
-            // make cell containing buttons
-            final TableCell<Confession, String> cell = new TableCell<Confession, String>() {
-                
-                private final Button btn = new Button("Approve");
-                
-                {
-                        btn.setOnAction((ActionEvent event) -> {
-                            Confession conf = getTableView().getItems().get(getIndex());
-                            System.out.println("selectedData: " + conf);
-                        });
-                    }
-                
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    //that cell created only on non-empty rows
-                    if (empty) {
-                        setGraphic(null);
-                        setText(null);
-
-                    } else {
-                        setGraphic(btn);
-                    }
-                }
-
-            };
-
-            return cell;
-        };*/
-        
         Callback<TableColumn<Confession, String>, TableCell<Confession, String>> cellFactory1 = (TableColumn<Confession, String> param) -> {
             // make cell containing buttons
             final TableCell<Confession, String> cell = new TableCell<Confession, String>() {
