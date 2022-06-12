@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.DisplayPendingConfController">
    <children>
-      <TableView fx:id="tableView" layoutX="17.0" layoutY="49.0" prefHeight="629.0" prefWidth="817.0">
+      <TableView fx:id="tableView" layoutX="17.0" layoutY="49.0" onMouseClicked="#showImage" prefHeight="629.0" prefWidth="817.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="103.99996566772461" text="ID" />
           <TableColumn fx:id="confessionCol" prefWidth="475.0" text="CONFESSION" />
@@ -20,6 +20,5 @@
       <Label layoutX="488.0" layoutY="14.0" text="Pending confession" />
       <Button fx:id="backButton" layoutX="17.0" layoutY="11.0" mnemonicParsing="false" onAction="#backButton" text="&lt;Back" />
       <ImageView fx:id="displayImage" fitHeight="183.0" fitWidth="227.0" layoutX="843.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="button" layoutX="931.0" layoutY="347.0" mnemonicParsing="false" onAction="#showImage" text="Show Image" />
    </children>
 </AnchorPane>

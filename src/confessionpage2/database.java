@@ -27,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -691,7 +692,7 @@ public class database {
         file = fileChooser.showOpenDialog(stage);
     }
     
-    public static Image getImageById(ActionEvent event,String id) throws IOException { //for displaying image from confession2 database
+    public static Image getImageById(MouseEvent event,String id) throws IOException { //for displaying image from confession2 database
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -716,13 +717,13 @@ public class database {
         return image;
     }
     
-    public static Image getImageById2(ActionEvent event,String id) throws IOException { //for displaying image from pendingconf database
+    public static Image getImageById2(MouseEvent event,String id) throws IOException { //for displaying image from pendingconf database
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Image image = null;
         try{
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root"); //connect to your databases, javafx-loginsigup is my scheme name, root is my user and root is my password 
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root"); //connect to your databases
             preparedStatement = connection.prepareStatement("SELECT image FROM pendingconf WHERE idconfession = ?"); 
             preparedStatement.setString(1, id);
             resultSet = preparedStatement.executeQuery();

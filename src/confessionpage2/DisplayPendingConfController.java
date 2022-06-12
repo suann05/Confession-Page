@@ -27,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -106,9 +107,15 @@ public class DisplayPendingConfController implements Initializable {
         
     }
     
-    public void showImage(ActionEvent event) throws IOException{
-        confession = tableView.getSelectionModel().getSelectedItem();
-        displayImage.setImage(database.getImageById2(event, confession.getId()));
+    public void showImage(MouseEvent event) throws IOException{
+        tableView.setOnMouseClicked(e ->{
+            try {
+                confession = tableView.getSelectionModel().getSelectedItem();
+                displayImage.setImage(database.getImageById(event, confession.getId()));
+            } catch (IOException ex) {
+                Logger.getLogger(DisplayConfessionPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
     
     public void backButton(ActionEvent event) throws IOException{ //a method to go to userConfessionPage.fxml

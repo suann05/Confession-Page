@@ -15,7 +15,7 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" prefHeight="539.0" prefWidth="805.0">
+      <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" onMouseClicked="#showImage" prefHeight="539.0" prefWidth="805.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="81.59997367858887" style="-fx-background-color: eae7dc;" text="ID" />
           <TableColumn fx:id="confessionCol" prefWidth="475.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
@@ -23,7 +23,6 @@
             <TableColumn fx:id="dateCol" prefWidth="154.4000244140625" style="-fx-background-color: eae7dc;" text="DATE" />
         </columns>
       </TableView>
-      <Button fx:id="button" layoutX="921.0" layoutY="337.0" mnemonicParsing="false" onAction="#showImage" text="Show Image" />
       <ImageView fx:id="displayImage" fitHeight="183.0" fitWidth="227.0" layoutX="833.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="199.0" layoutY="55.0" text="Search" textFill="#5d5c61">
          <font>
