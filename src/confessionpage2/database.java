@@ -54,6 +54,91 @@ public class database {
         PreparedStatement preparedStatement = null;
         PreparedStatement spamCheck = null;
         ResultSet resultSet = null;
+        
+        try{
+            
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            spamCheck = connection.prepareStatement("SELECT * FROM pendingconf WHERE confession = ?");
+            spamCheck.setString(1, confession);
+            resultSet = spamCheck.executeQuery();
+            
+            
+            if(resultSet.isBeforeFirst()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Please submit a different content");
+                alert.show();
+                
+            }else{
+                String word = "fuck";
+                String[] array = confession.split(" ");
+                for(int i=0;i<array.length;i++){
+                if(array[i].equalsIgnoreCase(word)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Please check your content.");
+                        alert.show();
+                }else{
+                    
+                    
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
+                    preparedStatement.setString(1, id);
+                    preparedStatement.setString(2, confession);
+                    preparedStatement.setString(3,null);
+                    preparedStatement.setString(4, date);
+                    
+                    preparedStatement.executeUpdate();
+                    
+                    confID.enqueue(id);
+                    confConf.enqueue(confession);
+                    confReplyID.enqueue(null);
+                    confDate.enqueue(date); 
+                    
+                    System.out.println(confID.toString());
+                    System.out.println(confConf.toString());
+                    System.out.println(confReplyID.toString());
+                    System.out.println(confDate.toString());
+                    
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
+                    alert.show(); 
+                }
+                }
+                }
+   
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+    }
+    
+    public static void insertConfessionWithImage(ActionEvent event,String id,String confession,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement spamCheck = null;
+        ResultSet resultSet = null;
         FileInputStream fs =null;
         
         try{
@@ -235,6 +320,106 @@ public class database {
     }
     
     public static void insertPendingConf(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement spamCheck = null;
+        PreparedStatement psCheckIDExists = null;
+        ResultSet resultSet = null;
+        
+        try{
+            
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            spamCheck = connection.prepareStatement("SELECT * FROM pendingconf WHERE confession = ?");
+            spamCheck.setString(1, confession);
+            resultSet = spamCheck.executeQuery();
+            
+            
+            if(resultSet.isBeforeFirst()){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Please submit a different content");
+                alert.show();
+                
+            }else{
+                String word = "fuck";
+                String[] array = confession.split(" ");
+                for(int i=0;i<array.length;i++){
+                if(array[i].equalsIgnoreCase(word)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Please check your content.");
+                        alert.show();
+                }else{
+                    
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+                    psCheckIDExists = connection.prepareStatement("SELECT * FROM confession2 WHERE idconfession=?");
+                    psCheckIDExists.setString(1, replyid);
+                    resultSet = psCheckIDExists.executeQuery();
+            
+                    if(resultSet.isBeforeFirst()){
+                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
+                    preparedStatement.setString(1, id);
+                    preparedStatement.setString(2, confession);
+                    preparedStatement.setString(3,replyid);
+                    preparedStatement.setString(4, date);
+                    
+               
+                    preparedStatement.executeUpdate();
+                    
+                    confID.enqueue(id);
+                    confConf.enqueue(confession);
+                    confReplyID.enqueue(replyid);
+                    confDate.enqueue(date); 
+                    
+                    System.out.println(confID.toString());
+                    System.out.println(confConf.toString());
+                    System.out.println(confReplyID.toString());
+                    System.out.println(confDate.toString());
+                    
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
+                    alert.show(); 
+                }else{
+                      Alert alert = new Alert(Alert.AlertType.ERROR);
+                      alert.setContentText("Reply ID doesn't exists.");
+                      alert.show();  
+                    }
+                }
+                }
+
+            
+            
+            }
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            if(resultSet!=null){
+                try{
+                    resultSet.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(preparedStatement!=null){
+                try{
+                    preparedStatement.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection!=null){
+                try{
+                    connection.close();
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+        }
+    }
+    
+    public static void insertPendingConfWithImage(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;

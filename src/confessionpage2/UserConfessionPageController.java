@@ -93,15 +93,19 @@ public class UserConfessionPageController{
         confReplyID.enqueue(idTextField.getText());
         confDate.enqueue(strDate);
         
-        if(idTextField.getText().isEmpty()==true&&confessionTextField.getText().isEmpty()==false)
+        if(idTextField.getText().isEmpty()==true&&confessionTextField.getText().isEmpty()==false){ //no reply id and image
             database.insertConfession(event, confID.getElement(), confConf.getElement(),confDate.getElement());
-        else if(confessionTextField.getText().isEmpty()==true){
+        }else if(idTextField.getText().isEmpty()==true&&confessionTextField.getText().isEmpty()==false&&imageFilePath.getText().isEmpty()==false){ //no reply id but with image
+            database.insertConfessionWithImage(event, confID.getElement(), confConf.getElement(),confDate.getElement());
+        }else if(idTextField.getText().isEmpty()==false&&confessionTextField.getText().isEmpty()==false&&imageFilePath.getText().isEmpty()==false){ //with replyid and image
+            database.insertPendingConfWithImage(event, confID.getElement(), confConf.getElement(), confReplyID.getElement(), confDate.getElement());
+        }else if(idTextField.getText().isEmpty()==false&&confessionTextField.getText().isEmpty()==false&&imageFilePath.getText().isEmpty()==true){ //with reply id but no image
+            database.insertPendingConf(event, confID.getElement(), confConf.getElement(), confReplyID.getElement(), confDate.getElement());
+        }else if(confessionTextField.getText().isEmpty()==true){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Please enter your confession.");
             alert.show();
-        }else
-            database.insertPendingConf(event, confID.getElement(), confConf.getElement(), confReplyID.getElement(), confDate.getElement());
-        
+        }
         database.timeScheduling();
          
     }
