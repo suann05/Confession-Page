@@ -100,7 +100,7 @@ public class DisplayPendingConfController implements Initializable {
         refreshTable();
         
         
-        idCol.setCellValueFactory(new PropertyValueFactory<>("idconfession"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         confessionCol.setCellValueFactory(new PropertyValueFactory<>("confession"));
         replyidCol.setCellValueFactory(new PropertyValueFactory<>("replyid"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
