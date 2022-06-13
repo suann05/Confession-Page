@@ -93,7 +93,7 @@ public class UserConfessionPageController{
         confReplyID.enqueue(idTextField.getText());
         confDate.enqueue(strDate);
         
-        if(idTextField.getText().isEmpty()==true&&confessionTextField.getText().isEmpty()==false){ //no reply id and image
+        if(idTextField.getText().isEmpty()==true&&confessionTextField.getText().isEmpty()==false&&imageFilePath.getText().isEmpty()==true){ //no reply id and image
             database.insertConfession(event, confID.getElement(), confConf.getElement(),confDate.getElement());
         }else if(idTextField.getText().isEmpty()==true&&confessionTextField.getText().isEmpty()==false&&imageFilePath.getText().isEmpty()==false){ //no reply id but with image
             database.insertConfessionWithImage(event, confID.getElement(), confConf.getElement(),confDate.getElement());
