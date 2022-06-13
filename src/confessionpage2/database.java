@@ -49,6 +49,17 @@ public class database {
     static File file;
     static FileChooser fileChooser;
     
+    public static boolean checkBadWords(ActionEvent event,String confession){
+        String word = "fuck";
+        String[] array = confession.split(" ");
+        for(int i=0;i<array.length;i++){
+            if(array[i].equalsIgnoreCase(word)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public static void insertConfession(ActionEvent event,String id,String confession,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
         
         Connection connection = null;
@@ -70,17 +81,9 @@ public class database {
                 alert.show();
                 
             }else{
-                String word = "fuck";
-                String[] array = confession.split(" ");
-                for(int i=0;i<array.length;i++){
-                if(array[i].equalsIgnoreCase(word)){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Please check your content.");
-                        alert.show();
-                }else{
-                    
-                    
-                    connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
+            
+            if(checkBadWords(event,confession)==false){
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
                     preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
                     preparedStatement.setString(1, id);
                     preparedStatement.setString(2, confession);
@@ -102,10 +105,14 @@ public class database {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
                     alert.show(); 
-                }
-                }
-                }
-   
+                    
+            }else if(checkBadWords(event,confession)==true){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Please check your content.");
+                alert.show();
+            }
+            }
+            
         }catch(SQLException e){
             e.printStackTrace();
         } finally{
@@ -156,16 +163,7 @@ public class database {
                 alert.show();
                 
             }else{
-                String word = "fuck";
-                String[] array = confession.split(" ");
-                for(int i=0;i<array.length;i++){
-                if(array[i].equalsIgnoreCase(word)){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Please check your content.");
-                        alert.show();
-                }else{
-                    
-                    
+                if(checkBadWords(event,confession)==false){
                     connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
                     preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date,image) VALUES (?,?,?,?,?)");
                     preparedStatement.setString(1, id);
@@ -190,7 +188,10 @@ public class database {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
                     alert.show(); 
-                }
+                }else if(checkBadWords(event,confession)==true){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Please check your content.");
+                    alert.show();
                 }
                 }
    
@@ -342,15 +343,7 @@ public class database {
                 alert.show();
                 
             }else{
-                String word = "fuck";
-                String[] array = confession.split(" ");
-                for(int i=0;i<array.length;i++){
-                if(array[i].equalsIgnoreCase(word)){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Please check your content.");
-                        alert.show();
-                }else{
-                    
+                if(checkBadWords(event,confession)==false){
                     connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
                     psCheckIDExists = connection.prepareStatement("SELECT * FROM confession2 WHERE idconfession=?");
                     psCheckIDExists.setString(1, replyid);
@@ -385,7 +378,10 @@ public class database {
                       alert.setContentText("Reply ID doesn't exists.");
                       alert.show();  
                     }
-                }
+                }else if(checkBadWords(event,confession)==true){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Please check your content.");
+                    alert.show();
                 }
 
             
@@ -443,15 +439,7 @@ public class database {
                 alert.show();
                 
             }else{
-                String word = "fuck";
-                String[] array = confession.split(" ");
-                for(int i=0;i<array.length;i++){
-                if(array[i].equalsIgnoreCase(word)){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Please check your content.");
-                        alert.show();
-                }else{
-                    
+                if(checkBadWords(event,confession)==false){
                     connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
                     psCheckIDExists = connection.prepareStatement("SELECT * FROM confession2 WHERE idconfession=?");
                     psCheckIDExists.setString(1, replyid);
@@ -487,7 +475,10 @@ public class database {
                       alert.setContentText("Reply ID doesn't exists.");
                       alert.show();  
                     }
-                }
+                }else if(checkBadWords(event,confession)==true){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Please check your content.");
+                    alert.show();
                 }
 
             
