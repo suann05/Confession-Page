@@ -253,7 +253,7 @@ public class database {
             }
         }
         Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root,600,500));
+        stage.setScene(new Scene(root,1080,700));
         stage.show();   
         
     }
