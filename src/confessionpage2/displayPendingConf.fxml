@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.DisplayPendingConfController">
    <children>
-      <TableView fx:id="tableView" layoutX="17.0" layoutY="49.0" prefHeight="629.0" prefWidth="817.0">
+      <TableView fx:id="tableView" layoutX="17.0" layoutY="49.0" onMouseClicked="#showImage" prefHeight="629.0" prefWidth="817.0">
         <columns>
-          <TableColumn fx:id="idCol" prefWidth="103.99996566772461" text="ID" />
-          <TableColumn fx:id="confessionCol" prefWidth="475.0" text="CONFESSION" />
-            <TableColumn fx:id="replyidCol" prefWidth="120.0" text="REPLYID" />
-            <TableColumn fx:id="dateCol" prefWidth="120.0" text="DATE" />
+          <TableColumn fx:id="idCol" prefWidth="103.99996566772461" style="-fx-background-color: eae7dc;" text="ID" />
+          <TableColumn fx:id="confessionCol" prefWidth="475.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
+            <TableColumn fx:id="replyidCol" prefWidth="120.0" style="-fx-background-color: eae7dc;" text="REPLYID" />
+            <TableColumn fx:id="dateCol" prefWidth="120.0" style="-fx-background-color: eae7dc;" text="DATE" />
         </columns>
       </TableView>
-      <Label layoutX="488.0" layoutY="14.0" text="Pending confession" />
-      <Button fx:id="backButton" layoutX="17.0" layoutY="11.0" mnemonicParsing="false" onAction="#backButton" text="&lt;Back" />
+      <Button fx:id="backButton" layoutX="17.0" layoutY="11.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: d8c3a5;" text="&lt;Back" textFill="#5d5c61">
+         <font>
+            <Font name="Georgia Bold" size="18.0" />
+         </font></Button>
       <ImageView fx:id="displayImage" fitHeight="183.0" fitWidth="227.0" layoutX="843.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="button" layoutX="931.0" layoutY="347.0" mnemonicParsing="false" onAction="#showImage" text="Show Image" />
    </children>
 </AnchorPane>

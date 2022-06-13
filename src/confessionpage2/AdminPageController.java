@@ -167,9 +167,15 @@ public class AdminPageController implements Initializable {
          
     }
     
-    public void showImage(ActionEvent event) throws IOException{
-        confession = tableView.getSelectionModel().getSelectedItem();
-        displayImage.setImage(database.getImageById(event, confession.getId()));
+    public void showImage(MouseEvent event) throws IOException{
+        tableView.setOnMouseClicked(e ->{
+            try {
+                confession = tableView.getSelectionModel().getSelectedItem();
+                displayImage.setImage(database.getImageById(event, confession.getId()));
+            } catch (IOException ex) {
+                Logger.getLogger(DisplayConfessionPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
     
     public void backButton(ActionEvent event) throws IOException{ //a method to go to userConfessionPage.fxml
