@@ -55,6 +55,11 @@ public class Confession {
     public void setReplyid(String replyid) {
         this.replyid = replyid;
     }
+    
+    
+
+    
+    
 
     
     
