@@ -690,7 +690,7 @@ public class database {
         Image image = null;
         try{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root"); //connect to your databases, javafx-loginsigup is my scheme name, root is my user and root is my password 
-            preparedStatement = connection.prepareStatement("SELECT image FROM confession2 WHERE idconfession = ?"); 
+            preparedStatement = connection.prepareStatement("SELECT image FROM confession2 WHERE idconfession = ? and image IS NOT NULL"); 
             preparedStatement.setString(1, id);
             resultSet = preparedStatement.executeQuery();
             
@@ -715,7 +715,7 @@ public class database {
         Image image = null;
         try{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root"); //connect to your databases
-            preparedStatement = connection.prepareStatement("SELECT image FROM pendingconf WHERE idconfession = ?"); 
+            preparedStatement = connection.prepareStatement("SELECT image FROM pendingconf WHERE idconfession = ? and image IS NOT NULL"); 
             preparedStatement.setString(1, id);
             resultSet = preparedStatement.executeQuery();
             

@@ -83,7 +83,7 @@ public class DisplayConfessionPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         connection = database.getConnect();
-        query = "SELECT * FROM confession2 ORDER BY DATE DESC";
+        query = "SELECT * FROM confession2 ORDER BY date DESC";
         
         try{
             
@@ -120,12 +120,14 @@ public class DisplayConfessionPageController implements Initializable{
                     
                     String searchKeyword = newValue.toLowerCase();
                     
-                    if(Confession.getConfession().toLowerCase().indexOf(searchKeyword) > -1){
+                    if(Confession.getConfession().toLowerCase().contains(searchKeyword)){
                        return true;
-                    }else if(Confession.getDate().toLowerCase().indexOf(searchKeyword) > -1){
+                    }else if(Confession.getDate().toLowerCase().contains(searchKeyword)){
                        return true;
-                    }else if(Confession.getId().toLowerCase().indexOf(searchKeyword) > -1){
+                    }else if(Confession.getId().toLowerCase().contains(searchKeyword)){
                        return true;
+                    /*}else if(Confession.getReplyid().toLowerCase().contains(searchKeyword)){
+                       return true;*/
                     }else{
                        return false;
                     }
@@ -155,5 +157,8 @@ public class DisplayConfessionPageController implements Initializable{
         });
         
     }
+    
+   
+        
     
 }
