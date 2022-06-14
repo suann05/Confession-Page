@@ -87,7 +87,7 @@ public class database {
                     preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
                     preparedStatement.setString(1, id);
                     preparedStatement.setString(2, confession);
-                    preparedStatement.setString(3,null);
+                    preparedStatement.setString(3, null);
                     preparedStatement.setString(4, date);
                     
                     preparedStatement.executeUpdate();
