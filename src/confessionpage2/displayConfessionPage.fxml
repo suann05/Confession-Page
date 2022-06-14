@@ -15,7 +15,7 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" onMouseClicked="#showImage" prefHeight="539.0" prefWidth="805.0">
+      <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" onMouseClicked="#showImage" onSort="#search" prefHeight="539.0" prefWidth="805.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="81.59997367858887" style="-fx-background-color: eae7dc;" text="ID" />
           <TableColumn fx:id="confessionCol" prefWidth="475.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
@@ -28,6 +28,6 @@
          <font>
             <Font name="Georgia Bold" size="18.0" />
          </font></Label>
-      <TextField fx:id="searchTextField" layoutX="272.0" layoutY="52.0" prefHeight="34.0" prefWidth="534.0" />
+      <TextField fx:id="searchTextField" layoutX="272.0" layoutY="52.0" onAction="#search" prefHeight="34.0" prefWidth="534.0" />
    </children>
 </AnchorPane>
