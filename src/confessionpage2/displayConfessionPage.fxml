@@ -13,13 +13,13 @@
    <children>
       <Button fx:id="submitButton" layoutX="383.0" layoutY="646.0" mnemonicParsing="false" onAction="#confessionPage" text="Click here to submit your confession">
          <font>
-            <Font size="18.0" />
+            <Font name="Georgia" size="18.0" />
          </font></Button>
       <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" onMouseClicked="#showImage" prefHeight="539.0" prefWidth="805.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="81.59997367858887" style="-fx-background-color: eae7dc;" text="ID" />
           <TableColumn fx:id="confessionCol" prefWidth="475.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
-            <TableColumn fx:id="replyIDCol" prefWidth="91.199951171875" style="-fx-background-color: eae7dc;" text="ReplyID" />
+            <TableColumn fx:id="replyIDCol" prefWidth="91.199951171875" style="-fx-background-color: eae7dc;" text="REPLYID" />
             <TableColumn fx:id="dateCol" prefWidth="154.4000244140625" style="-fx-background-color: eae7dc;" text="DATE" />
         </columns>
       </TableView>

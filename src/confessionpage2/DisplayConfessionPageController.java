@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -151,7 +153,27 @@ public class DisplayConfessionPageController implements Initializable{
             try {
                 confession = tableView.getSelectionModel().getSelectedItem();
                 displayImage.setImage(database.getImageById(event, confession.getId()));
+                
+                connection = database.getConnect();
+                query = "SELECT idconfession FROM `confession2` WHERE replyid=?"; 
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, confession.getId());
+                resultSet = preparedStatement.executeQuery();
+                
+                ArrayList<String> replyid = new ArrayList<String>();
+                
+                while(resultSet.next()){
+                    String id = resultSet.getString("idconfession");
+                    replyid.add(id);
+                }
+                
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("The confession post id that replying to this post : "+replyid);
+                    alert.show();
+                                
             } catch (IOException ex) {
+                Logger.getLogger(DisplayConfessionPageController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
                 Logger.getLogger(DisplayConfessionPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });

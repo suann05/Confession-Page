@@ -12,10 +12,10 @@
       <TableView fx:id="tableView" layoutX="8.0" layoutY="73.0" onMouseClicked="#showImage" prefHeight="618.0" prefWidth="869.0">
         <columns>
             <TableColumn fx:id="idCol" prefWidth="85.60000324249268" style="-fx-background-color: eae7dc;" text="ID" />
-          <TableColumn fx:id="confessionCol" prefWidth="492.0" style="-fx-background-color: eae7dc;" text="Confession" />
-            <TableColumn fx:id="replyIDCol" prefWidth="94.39996337890625" style="-fx-background-color: eae7dc;" text="ReplyID" />
-            <TableColumn fx:id="dateCol" prefWidth="128.0" style="-fx-background-color: eae7dc;" text="Date" />
-            <TableColumn fx:id="editCol1" prefWidth="71.2000732421875" style="-fx-background-color: eae7dc;" text="Remove" />
+          <TableColumn fx:id="confessionCol" prefWidth="492.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
+            <TableColumn fx:id="replyIDCol" prefWidth="94.39996337890625" style="-fx-background-color: eae7dc;" text="REPLYID" />
+            <TableColumn fx:id="dateCol" prefWidth="128.0" style="-fx-background-color: eae7dc;" text="DATE" />
+            <TableColumn fx:id="editCol1" prefWidth="71.2000732421875" style="-fx-background-color: eae7dc;" text="REMOVE" />
         </columns>
       </TableView>
       <Button fx:id="backButton" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: d8c3a5;" text="&lt;Back" textFill="#5d5c61">

@@ -4,14 +4,13 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="confessionpage2.PendingConfessionController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.PendingConfessionController">
    <children>
       <TableView fx:id="tableView" layoutX="9.0" layoutY="42.0" prefHeight="354.0" prefWidth="583.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="132.79998779296875" text="ID" />
           <TableColumn fx:id="confessionCol" prefWidth="162.4000244140625" text="CONFESSION" />
-            <TableColumn fx:id="replyidCol" prefWidth="146.4000244140625" text="REPLY ID" />
+            <TableColumn fx:id="replyidCol" prefWidth="146.4000244140625" text="REPLYID" />
             <TableColumn fx:id="dateCol" prefWidth="143.20001220703125" text="DATE" />
         </columns>
       </TableView>
