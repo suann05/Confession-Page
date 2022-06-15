@@ -202,7 +202,8 @@ public class DisplayConfessionPageController implements Initializable{
                     replyid.add(id);
                 }
                 //print the arraylist using the alert  
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Alert alert = new Alert(Alert.AlertType.NONE,"image",ButtonType.CLOSE);
+                alert.setGraphic(displayImage);
                 alert.setContentText("The confession post id that replying to this post : "+replyid);
                 alert.show();
                                 
@@ -217,8 +218,8 @@ public class DisplayConfessionPageController implements Initializable{
     
     public void logout(ActionEvent event) throws IOException{  //pop out the alert when the "x" button on the window is clicked
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Logout");
-        alert.setContentText("Are you sure you want to log out?");
+        alert.setTitle("Quit");
+        alert.setContentText("Are you sure you want to quit?");
         
         
         if(alert.showAndWait().get()==ButtonType.OK){ //change the scene to welcomePage.fxml file if "ok" is clicked

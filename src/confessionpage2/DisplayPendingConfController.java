@@ -22,7 +22,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -114,6 +116,9 @@ public class DisplayPendingConfController implements Initializable {
             try {
                 confession = tableView.getSelectionModel().getSelectedItem();
                 displayImage.setImage(database.getImageById(event, confession.getId()));
+                Alert alert = new Alert(Alert.AlertType.NONE,"image", ButtonType.CLOSE);
+                alert.setGraphic(displayImage);
+                alert.showAndWait();
             } catch (IOException ex) {
                 Logger.getLogger(DisplayConfessionPageController.class.getName()).log(Level.SEVERE, null, ex);
             }

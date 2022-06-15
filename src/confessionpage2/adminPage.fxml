@@ -9,21 +9,21 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.AdminPageController">
    <children>
-      <TableView fx:id="tableView" layoutX="8.0" layoutY="73.0" onMouseClicked="#showImage" prefHeight="618.0" prefWidth="869.0">
+      <TableView fx:id="tableView" layoutX="8.0" layoutY="73.0" onMouseClicked="#showImage" prefHeight="618.0" prefWidth="1051.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="73.0">
         <columns>
             <TableColumn fx:id="idCol" prefWidth="85.60000324249268" style="-fx-background-color: eae7dc;" text="ID" />
-          <TableColumn fx:id="confessionCol" prefWidth="492.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
+          <TableColumn fx:id="confessionCol" prefWidth="682.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
             <TableColumn fx:id="replyIDCol" prefWidth="94.39996337890625" style="-fx-background-color: eae7dc;" text="REPLYID" />
             <TableColumn fx:id="dateCol" prefWidth="128.0" style="-fx-background-color: eae7dc;" text="DATE" />
             <TableColumn fx:id="editCol1" prefWidth="71.2000732421875" style="-fx-background-color: eae7dc;" text="REMOVE" />
         </columns>
       </TableView>
-      <Button fx:id="backButton" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: d8c3a5;" text="&lt;Back" textFill="#5d5c61">
+      <ImageView fx:id="displayImage" fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="backButton" layoutX="8.0" layoutY="25.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: d8c3a5;" text="&lt;Back" textFill="#5d5c61" AnchorPane.bottomAnchor="649.6666666666666" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="1008.0" AnchorPane.topAnchor="25.0">
          <font>
-            <Font name="Georgia Bold" size="18.0" />
+            <Font name="Georgia Bold" size="14.0" />
          </font></Button>
-      <ImageView fx:id="displayImage" fitHeight="158.0" fitWidth="189.0" layoutX="884.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="refreshButton" layoutX="884.0" layoutY="660.0" mnemonicParsing="false" onAction="#refreshTable" style="-fx-background-color: d8c3a5;" text="Refresh" textFill="#5d5c61">
+      <Button fx:id="refreshButton" layoutX="990.0" layoutY="25.0" mnemonicParsing="false" onAction="#refreshTable" style="-fx-background-color: d8c3a5;" text="Refresh" textFill="#5d5c61">
          <font>
             <Font name="Georgia Bold" size="14.0" />
          </font>
