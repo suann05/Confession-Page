@@ -37,7 +37,7 @@ public class AdminChoosePageController {
     private Scene scene;
     private Parent root;
 
-    public void pendingPage(ActionEvent event) throws IOException{
+    public void pendingPage(ActionEvent event) throws IOException{ //a method to change the scene to displayPendingConf.fxml file
         root = FXMLLoader.load(getClass().getResource("displayPendingConf.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -45,7 +45,7 @@ public class AdminChoosePageController {
         stage.show();
     }
     
-    public void postedPage(ActionEvent event) throws IOException{
+    public void postedPage(ActionEvent event) throws IOException{ //a method to change the scene to adminPage.fxml file
         root = FXMLLoader.load(getClass().getResource("adminPage.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -53,13 +53,13 @@ public class AdminChoosePageController {
         stage.show();
     }
     
-    public void logout(ActionEvent event) throws IOException{
+    public void logout(ActionEvent event) throws IOException{ //pop out an alert message when the logout button is clicked
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setContentText("Are you sure you want to log out?");
         
         
-        if(alert.showAndWait().get()==ButtonType.OK){
+        if(alert.showAndWait().get()==ButtonType.OK){ //change the scene to welcomePage.fxml file when the user click "ok"
           root = FXMLLoader.load(getClass().getResource("welcomePage.fxml"));
           stage = (Stage)((Node)event.getSource()).getScene().getWindow();
           scene = new Scene(root);

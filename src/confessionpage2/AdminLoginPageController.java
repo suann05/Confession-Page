@@ -39,13 +39,13 @@ public class AdminLoginPageController{
     
     public void loginAdmin(ActionEvent event) throws SQLException, IOException{
         
-        if(usernameTextField.getText().isEmpty()==false && passwordField.getText().isEmpty()==false){
+        if(usernameTextField.getText().isEmpty()==false && passwordField.getText().isEmpty()==false){ //if admin entered both username and password
               
-                    database.loginAdmin(event, usernameTextField.getText(), passwordField.getText());
+                    database.loginAdmin(event, usernameTextField.getText(), passwordField.getText()); //connect to database to check whether admin entered correct username or password
                    
-            }else{
+            }else{ //if admin didnt entered either username or password or both
                 
-                Alert alert = new Alert(Alert.AlertType.ERROR);
+                Alert alert = new Alert(Alert.AlertType.ERROR); //pop out the alert
                 alert.setContentText("Please enter your email and password");
                 alert.show();
             }

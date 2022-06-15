@@ -27,18 +27,18 @@ public class ConfessionPage2 extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try{
-        Parent root = FXMLLoader.load(getClass().getResource("welcomePage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("welcomePage.fxml")); //first scene is welcomePage.fxml file
         Scene scene = new Scene(root);
      
-        primaryStage.setTitle("CONFESS TIME!");
+        primaryStage.setTitle("CONFESS TIME!"); //set the window title
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        Image logo = new Image(getClass().getResourceAsStream("icon.png"));
+        Image logo = new Image(getClass().getResourceAsStream("icon.png")); //set the window icon
         primaryStage.getIcons().add(logo);
         primaryStage.show();
         
-        primaryStage.setOnCloseRequest(event -> {
+        primaryStage.setOnCloseRequest(event -> { //call out the logout method
           event.consume();
           logout(primaryStage);
                     
@@ -50,7 +50,7 @@ public class ConfessionPage2 extends Application {
         
     }
     
-    public void logout(Stage stage){
+    public void logout(Stage stage){ //pop out the alert when the "x" button on the window is clicked
         
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");

@@ -66,7 +66,7 @@ public class DisplayPendingConfController implements Initializable {
     
     ObservableList<Confession> confessionList = FXCollections.observableArrayList();
     
-    public void refreshTable(){
+    public void refreshTable(){//get data from database and refresh everytime when the button is clicked
          try {
             confessionList.clear();
             
@@ -96,7 +96,7 @@ public class DisplayPendingConfController implements Initializable {
         loadDate();
     }
     
-    public void loadDate(){
+    public void loadDate(){ //connect to database and get the value
         
         connection = database.getConnect();
         refreshTable();
@@ -109,7 +109,7 @@ public class DisplayPendingConfController implements Initializable {
         
     }
     
-    public void showImage(MouseEvent event) throws IOException{
+    public void showImage(MouseEvent event) throws IOException{ //show the image where posted by user
         tableView.setOnMouseClicked(e ->{
             try {
                 confession = tableView.getSelectionModel().getSelectedItem();
@@ -120,7 +120,7 @@ public class DisplayPendingConfController implements Initializable {
         });
     }
     
-    public void backButton(ActionEvent event) throws IOException{ //a method to go to userConfessionPage.fxml
+    public void backButton(ActionEvent event) throws IOException{ //a method to go to adminChoosePage.fxml
         root = FXMLLoader.load(getClass().getResource("adminChoosePage.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

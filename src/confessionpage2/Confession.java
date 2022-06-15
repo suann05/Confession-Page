@@ -14,7 +14,8 @@ public class Confession {
     String confession;
     String replyid;
     String date;
-
+    
+    //constructor
     public Confession(String id, String confession, String replyid, String date) {
         this.id = id;
         this.confession = confession;

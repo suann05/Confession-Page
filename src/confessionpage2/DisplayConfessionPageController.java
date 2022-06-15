@@ -63,6 +63,8 @@ public class DisplayConfessionPageController implements Initializable{
     @FXML
     private Button button;
     @FXML
+    private Button refreshButton;
+    @FXML
     private Button logoutbutton;
     
     private Stage stage;
@@ -84,9 +86,37 @@ public class DisplayConfessionPageController implements Initializable{
         stage.setScene(scene);
         stage.show();
     }
+    
+    public void refreshTable(){ //get data from database and refresh everytime when the button is clicked
+         try {
+            confessionList.clear();
+            
+            query = "SELECT * FROM confession2 ORDER BY date DESC";
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            
+            while (resultSet.next()){
+                confessionList.add(new Confession(
+                        
+                        resultSet.getString("idconfession"),
+                        resultSet.getString("confession"),
+                        resultSet.getString("replyid"),
+                        resultSet.getString("date")
+                
+                ));
+                      
+                tableView.setItems(confessionList);
+                
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { //connect to database, get the data from the database and display it on table
         connection = database.getConnect();
         query = "SELECT * FROM confession2 ORDER BY date DESC";
         
@@ -102,7 +132,6 @@ public class DisplayConfessionPageController implements Initializable{
                 String queryReplyID = queryOutput.getString("replyid");
                 String queryDate = queryOutput.getString("date");
                 
-                //System.out.println(queryReplyID);
                 confessionList.add(new Confession(queryID,queryConfession,queryReplyID,queryDate));
                 
             }
@@ -114,7 +143,7 @@ public class DisplayConfessionPageController implements Initializable{
             
             tableView.setItems(confessionList);
             
-            FilteredList<Confession> filteredData = new FilteredList<>(confessionList, b -> true);
+            FilteredList<Confession> filteredData = new FilteredList<>(confessionList, b -> true); //search function : filter the value
             
             searchTextField.textProperty().addListener((observable,oldValue,newValue) -> {
                 filteredData.setPredicate(Confession -> {
@@ -151,13 +180,15 @@ public class DisplayConfessionPageController implements Initializable{
         
     }
     
-    public void showImage(MouseEvent event) throws IOException{
+    public void showImage(MouseEvent event) throws IOException{ //show the image which posted by user
         tableView.setOnMouseClicked(e ->{
             try {
                 confession = tableView.getSelectionModel().getSelectedItem();
                 displayImage.setImage(database.getImageById(event, confession.getId()));
                 
+                //connect to database
                 connection = database.getConnect();
+                //get the data which reply to that particular post
                 query = "SELECT idconfession FROM `confession2` WHERE replyid=?"; 
                 preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, confession.getId());
@@ -165,14 +196,15 @@ public class DisplayConfessionPageController implements Initializable{
                 
                 ArrayList<String> replyid = new ArrayList<String>();
                 
+                //store it to arraylist
                 while(resultSet.next()){
                     String id = resultSet.getString("idconfession");
                     replyid.add(id);
                 }
-                
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setContentText("The confession post id that replying to this post : "+replyid);
-                    alert.show();
+                //print the arraylist using the alert  
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("The confession post id that replying to this post : "+replyid);
+                alert.show();
                                 
             } catch (IOException ex) {
                 Logger.getLogger(DisplayConfessionPageController.class.getName()).log(Level.SEVERE, null, ex);
@@ -183,13 +215,13 @@ public class DisplayConfessionPageController implements Initializable{
         
     }
     
-    public void logout(ActionEvent event) throws IOException{
+    public void logout(ActionEvent event) throws IOException{  //pop out the alert when the "x" button on the window is clicked
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setContentText("Are you sure you want to log out?");
         
         
-        if(alert.showAndWait().get()==ButtonType.OK){
+        if(alert.showAndWait().get()==ButtonType.OK){ //change the scene to welcomePage.fxml file if "ok" is clicked
           root = FXMLLoader.load(getClass().getResource("welcomePage.fxml"));
           stage = (Stage)((Node)event.getSource()).getScene().getWindow();
           scene = new Scene(root);

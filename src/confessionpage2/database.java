@@ -49,18 +49,18 @@ public class database {
     static File file;
     static FileChooser fileChooser;
     
-    public static boolean checkBadWords(ActionEvent event,String confession){
+    public static boolean checkBadWords(ActionEvent event,String confession){ //to check whether the confession submit by user include any inappropriate wordings
         String word = "fuck";
         String[] array = confession.split(" ");
-        for(int i=0;i<array.length;i++){
+        for(int i=0;i<array.length;i++){ //if rude words included, return true
             if(array[i].equalsIgnoreCase(word)){
                 return true;
             }
         }
-        return false;
+        return false; //if no, return false
     }
     
-    public static void insertConfession(ActionEvent event,String id,String confession,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
+    public static void insertConfession(ActionEvent event,String id,String confession,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database(without reply id)
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -70,21 +70,21 @@ public class database {
         try{
             
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-            spamCheck = connection.prepareStatement("SELECT * FROM pendingconf WHERE confession = ?");
+            spamCheck = connection.prepareStatement("SELECT * FROM pendingconf WHERE confession = ?"); //select all the confession post in pendingconf database
             spamCheck.setString(1, confession);
             resultSet = spamCheck.executeQuery();
             
             
-            if(resultSet.isBeforeFirst()){
+            if(resultSet.isBeforeFirst()){ //if there is a same content(spam checking)
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Please submit a different content");
                 alert.show();
                 
-            }else{
+            }else{ //if there is no similar content
             
-            if(checkBadWords(event,confession)==false){
+            if(checkBadWords(event,confession)==false){ //check is there any rude words, if false(no rude words)
                 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
-                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)");
+                    preparedStatement = connection.prepareStatement("INSERT INTO confessionpage.pendingconf(idconfession,confession,replyid,date) VALUES (?,?,?,?)"); //insert to pendingconf
                     preparedStatement.setString(1, id);
                     preparedStatement.setString(2, confession);
                     preparedStatement.setString(3, null);
@@ -106,7 +106,7 @@ public class database {
                     alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
                     alert.show(); 
                     
-            }else if(checkBadWords(event,confession)==true){
+            }else if(checkBadWords(event,confession)==true){ //if there is including bad words
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Please check your content.");
                 alert.show();
@@ -141,7 +141,7 @@ public class database {
         }
     }
     
-    public static void insertConfessionWithImage(ActionEvent event,String id,String confession,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
+    public static void insertConfessionWithImage(ActionEvent event,String id,String confession,String date)throws SQLException, FileNotFoundException{ //same method same the previous one, just including image submitted by user
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -258,32 +258,32 @@ public class database {
         
     }
     
-    public static void loginAdmin(ActionEvent event,String username,String password)throws SQLException, IOException{
+    public static void loginAdmin(ActionEvent event,String username,String password)throws SQLException, IOException{ //check whether the username and password entered by admin is correct
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         
         try{
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/adminlogin", "root", "root"); //connect to your databases, javafx-loginsigup is my scheme name, root is my user and root is my password 
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/adminlogin", "root", "root");  
             preparedStatement = connection.prepareStatement("SELECT password FROM admin WHERE username = ?"); 
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
             
-            if(!(resultSet.isBeforeFirst())){
+            if(!(resultSet.isBeforeFirst())){ //if username entered is not found in database
                 System.out.println("User not found");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Provided credentials are incorrect");
                 alert.show();
             }
-            else{
+            else{ //if username entered is found
                 while(resultSet.next()){
                     String retrivedPassword = resultSet.getString("password");
-                    if(retrivedPassword.equals(password)){
-                         changeScene(event,username,"adminChoosePage.fxml"); 
+                    if(retrivedPassword.equals(password)){ //check whether the password entered is correct
+                         changeScene(event,username,"adminChoosePage.fxml"); //if correct, change the scene to adminChoosePage.fxml
                         
                     }
-                    else{
+                    else{ //else, pop out the alert
                         System.out.println("Password is incorrect");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("Provided credentials are incorrect");
@@ -321,7 +321,7 @@ public class database {
         }
     }
     
-    public static void insertPendingConf(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
+    public static void insertPendingConf(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database(with reply id)
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -416,7 +416,7 @@ public class database {
         }
     }
     
-    public static void insertPendingConfWithImage(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database
+    public static void insertPendingConfWithImage(ActionEvent event,String id,String confession,String replyid,String date)throws SQLException, FileNotFoundException{ //a method to insert the confession from user into database(with reply id and image)
         
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -513,16 +513,16 @@ public class database {
         }
     }
     
-    public static void timeScheduling() throws SQLException{
+    public static void timeScheduling() throws SQLException{ //timer task, the confession from pendingconf will upload automatically to confession2 based on different number of pending confession
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/confessionpage", "root", "root");
         Statement stmt = con.createStatement();
-        String query = "select count(*) from pendingconf";
+        String query = "select count(*) from pendingconf"; //count how many pending confession in table
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
         int count = rs.getInt(1);
         System.out.println("Number of records in the cricketers_data table: "+count);
         
-        if(count<=5){
+        if(count<=5){ //if less thn or equal 5
         
         Timer timer = new Timer();
         
@@ -532,8 +532,8 @@ public class database {
             public void run() {
                 
                     try {
-                        insertConfession2();
-                        removeConfession2();
+                        insertConfession2(); //insert to confession2 table
+                        removeConfession2(); //remove in the pendingconf table
                         System.out.println("done");
                     } catch (SQLException ex) {
                         Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
@@ -544,30 +544,9 @@ public class database {
         
         };
         
-        timer.schedule(task, 60000);
+        timer.schedule(task, 60000); //pop out every 15mins
             
-        }else if(count<=10){
-            
-            Timer timer = new Timer();
-        
-            TimerTask task = new TimerTask(){
-                @Override
-                public void run() {
-                    try {
-                        insertConfession2();
-                        removeConfession2();
-                        System.out.println("done");
-                    } catch (SQLException ex) {
-                        Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
-                        System.out.println("error");
-                    }
-                }
-                
-            };
-            
-            timer.schedule(task, 600000);
-            
-        }else if(count>10){
+        }else if(count<=10){ //less than or equal to 10
             
             Timer timer = new Timer();
         
@@ -586,7 +565,28 @@ public class database {
                 
             };
             
-            timer.schedule(task, 300000);
+            timer.schedule(task, 600000); //pop out every 10 mins
+            
+        }else if(count>10){ //more than 10
+            
+            Timer timer = new Timer();
+        
+            TimerTask task = new TimerTask(){
+                @Override
+                public void run() {
+                    try {
+                        insertConfession2();
+                        removeConfession2();
+                        System.out.println("done");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(database.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("error");
+                    }
+                }
+                
+            };
+            
+            timer.schedule(task, 300000); //pop out every 5mins
             
         }else{
             System.out.println("oops");

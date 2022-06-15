@@ -24,24 +24,24 @@ public class Queue<E> {
         list = new LinkedList<>(Arrays.asList(e));
     }
     
-    public void enqueue(E e){
+    public void enqueue(E e){ //add the element into linked list
         list.addLast(e);
     }
     
-    public E dequeue(){
+    public E dequeue(){ //delete element in the linked list
         return list.removeFirst();
     }
     
-    public E getElement(){
+    public E getElement(){ //get the first element
         return list.getFirst();
     }
     
-    public E getElementAt(){
+    public E getElementAt(){ //get last element
         return list.getLast();
     }
 
     @Override
-    public String toString() {
+    public String toString() { //print out the queue list
         return "Queue{" + "list=" + list + '}';
     }
     

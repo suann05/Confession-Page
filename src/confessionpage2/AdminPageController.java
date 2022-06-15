@@ -71,7 +71,7 @@ public class AdminPageController implements Initializable {
     
     ObservableList<Confession>  confessionList = FXCollections.observableArrayList();
     
-    public void refreshTable(){ //get data from database
+    public void refreshTable(){ //get data from database and refresh everytime when the button is clicked
          try {
             confessionList.clear();
             
@@ -125,6 +125,7 @@ public class AdminPageController implements Initializable {
                             
                             try {
                                 confession = tableView.getSelectionModel().getSelectedItem();
+                                //database connection
                                 connection = database.getConnect();
                                 query = "DELETE FROM `confession2` WHERE idconfession=?"; 
                                 preparedStatement = connection.prepareStatement(query);
@@ -162,14 +163,13 @@ public class AdminPageController implements Initializable {
             return cell;
         };
         
-         //editCol.setCellFactory(cellFactory);
          editCol1.setCellFactory(cellFactory1);
          tableView.setItems(confessionList);
          
          
     }
     
-    public void showImage(MouseEvent event) throws IOException{
+    public void showImage(MouseEvent event) throws IOException{ //a method to show the image posted by user
         tableView.setOnMouseClicked(e ->{
             try {
                 confession = tableView.getSelectionModel().getSelectedItem();
@@ -180,7 +180,7 @@ public class AdminPageController implements Initializable {
         });
     }
     
-    public void backButton(ActionEvent event) throws IOException{ //a method to go to userConfessionPage.fxml
+    public void backButton(ActionEvent event) throws IOException{ //a method to go to adminChoosePage.fxml
         root = FXMLLoader.load(getClass().getResource("adminChoosePage.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

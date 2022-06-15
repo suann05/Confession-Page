@@ -71,23 +71,21 @@ public class UserConfessionPageController{
     DateFormat formatter = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");  
     String strDate = formatter.format(date);
     
-    //JSONArray jrr = new JSONArray();
-    
     Queue<String> confID = new Queue<>();
     Queue<String> confConf = new Queue<>();
     Queue<String> confReplyID = new Queue<>();
     Queue<String> confDate = new Queue<>();
+    
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     
-    //String word = "fuck";
-    
     public void submitConfession(ActionEvent event) throws SQLException, IOException{ //a method to store the confession to the database
         Random rand = new Random();
-        int num = rand.nextInt(50000);
+        int num = rand.nextInt(50000); //generate random number as the confession post id
         String id = "UM"+String.valueOf(num);
         
+        //enqueue the element into queue list
         confID.enqueue(id);
         confConf.enqueue(confessionTextField.getText());
         confReplyID.enqueue(idTextField.getText());
@@ -106,11 +104,12 @@ public class UserConfessionPageController{
             alert.setContentText("Please enter your confession.");
             alert.show();
         }
-        database.timeScheduling();
+        
+        database.timeScheduling(); //call out the timer task method to store into a database
          
     }
     
-    public void browseFiles(ActionEvent event){
+    public void browseFiles(ActionEvent event){ //browse the image file path
         database.fileBrowser(event);
         if(database.file!=null){
             imageFilePath.setText(database.file.getAbsolutePath());
