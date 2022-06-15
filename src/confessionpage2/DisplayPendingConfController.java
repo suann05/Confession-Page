@@ -115,8 +115,8 @@ public class DisplayPendingConfController implements Initializable {
         tableView.setOnMouseClicked(e ->{
             try {
                 confession = tableView.getSelectionModel().getSelectedItem();
-                displayImage.setImage(database.getImageById(event, confession.getId()));
-                Alert alert = new Alert(Alert.AlertType.NONE,"image", ButtonType.CLOSE);
+                displayImage.setImage(database.getImageById2(event, confession.getId()));
+                Alert alert = new Alert(Alert.AlertType.NONE,"Image submitted by user", ButtonType.CLOSE);
                 alert.setGraphic(displayImage);
                 alert.showAndWait();
             } catch (IOException ex) {

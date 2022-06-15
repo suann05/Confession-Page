@@ -176,7 +176,7 @@ public class AdminPageController implements Initializable {
             try {
                 confession = tableView.getSelectionModel().getSelectedItem();
                 displayImage.setImage(database.getImageById(event, confession.getId()));
-                Alert alert = new Alert(Alert.AlertType.NONE,"image", ButtonType.CLOSE);
+                Alert alert = new Alert(Alert.AlertType.NONE,"Image submitted by user", ButtonType.CLOSE);
                 alert.setGraphic(displayImage);
                 alert.showAndWait();
             } catch (IOException ex) {

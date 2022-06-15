@@ -9,6 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.DisplayPendingConfController">
    <children>
+      <ImageView fx:id="displayImage" fitHeight="200.0" fitWidth="300.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
       <TableView fx:id="tableView" layoutX="17.0" layoutY="49.0" onMouseClicked="#showImage" prefHeight="629.0" prefWidth="817.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="73.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="103.99996566772461" style="-fx-background-color: eae7dc;" text="ID" />
@@ -26,6 +27,5 @@
             <Font name="Georgia Bold" size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="displayImage" fitHeight="200.0" fitWidth="300.0" layoutX="200.0" layoutY="200.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
