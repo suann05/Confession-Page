@@ -54,6 +54,8 @@ public class AdminPageController implements Initializable {
     @FXML
     private Button backButton;
     @FXML
+    private Button refreshButton;
+    @FXML
     private ImageView displayImage;
     
     

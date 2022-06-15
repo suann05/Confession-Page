@@ -50,6 +50,8 @@ public class DisplayPendingConfController implements Initializable {
     @FXML
     private Button backButton;
     @FXML
+    private Button refreshButton;
+    @FXML
     private ImageView displayImage;
     
     private Stage stage;
@@ -68,7 +70,7 @@ public class DisplayPendingConfController implements Initializable {
          try {
             confessionList.clear();
             
-            query = "SELECT * FROM pendingconf";
+            query = "SELECT * FROM pendingconf ORDER BY date DESC";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             
@@ -77,8 +79,8 @@ public class DisplayPendingConfController implements Initializable {
                         
                         resultSet.getString("idconfession"),
                         resultSet.getString("confession"),
-                        resultSet.getString("date"),
-                        resultSet.getString("replyid")));
+                        resultSet.getString("replyid"),
+                        resultSet.getString("date")));
                 tableView.setItems(confessionList);
                 
             }

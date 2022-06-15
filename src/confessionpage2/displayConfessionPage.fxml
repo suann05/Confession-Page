@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.DisplayConfessionPageController">
    <children>
-      <Button fx:id="submitButton" layoutX="383.0" layoutY="646.0" mnemonicParsing="false" onAction="#confessionPage" text="Click here to submit your confession">
+      <Button fx:id="submitButton" layoutX="383.0" layoutY="646.0" mnemonicParsing="false" onAction="#confessionPage" style="-fx-background-color: d8c3a5;" text="Click here to submit your confession">
          <font>
             <Font name="Georgia" size="18.0" />
          </font></Button>
@@ -29,5 +29,10 @@
             <Font name="Georgia Bold" size="18.0" />
          </font></Label>
       <TextField fx:id="searchTextField" layoutX="272.0" layoutY="52.0" prefHeight="34.0" prefWidth="534.0" />
+      <Button fx:id="logoutButton" layoutX="921.0" layoutY="651.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: d8c3a5;" text="Log Out">
+         <font>
+            <Font name="Georgia Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -14,7 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 /**
@@ -28,6 +30,8 @@ public class AdminChoosePageController {
     private Button pendingButton;
     @FXML
     private Button postedButton;
+    @FXML
+    private Button logoutButton;
     
     private Stage stage;
     private Scene scene;
@@ -47,6 +51,21 @@ public class AdminChoosePageController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    
+    public void logout(ActionEvent event) throws IOException{
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setContentText("Are you sure you want to log out?");
+        
+        
+        if(alert.showAndWait().get()==ButtonType.OK){
+          root = FXMLLoader.load(getClass().getResource("welcomePage.fxml"));
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show();
+        }
     }
     
 }

@@ -28,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -61,6 +62,8 @@ public class DisplayConfessionPageController implements Initializable{
     private ImageView displayImage;
     @FXML
     private Button button;
+    @FXML
+    private Button logoutbutton;
     
     private Stage stage;
     private Scene scene;
@@ -178,6 +181,21 @@ public class DisplayConfessionPageController implements Initializable{
             }
         });
         
+    }
+    
+    public void logout(ActionEvent event) throws IOException{
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setContentText("Are you sure you want to log out?");
+        
+        
+        if(alert.showAndWait().get()==ButtonType.OK){
+          root = FXMLLoader.load(getClass().getResource("welcomePage.fxml"));
+          stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+          scene = new Scene(root);
+          stage.setScene(scene);
+          stage.show();
+        }
     }
     
    

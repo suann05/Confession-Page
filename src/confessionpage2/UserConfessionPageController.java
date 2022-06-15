@@ -68,7 +68,7 @@ public class UserConfessionPageController{
     private Parent root;
     
     Date date = new Date();  
-    DateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");  
+    DateFormat formatter = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");  
     String strDate = formatter.format(date);
     
     //JSONArray jrr = new JSONArray();
