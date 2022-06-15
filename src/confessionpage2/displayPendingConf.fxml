@@ -26,6 +26,6 @@
             <Font name="Georgia Bold" size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="displayImage" fitHeight="200.0" fitWidth="300.0" layoutX="10.0" layoutY="10.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="displayImage" fitHeight="200.0" fitWidth="300.0" layoutX="200.0" layoutY="200.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

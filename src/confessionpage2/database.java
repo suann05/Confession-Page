@@ -544,7 +544,7 @@ public class database {
         
         };
         
-        timer.schedule(task, 10000); //pop out every 15mins
+        timer.schedule(task, 30000); //pop out every 15mins
             
         }else if(count<=10){ //less than or equal to 10
             

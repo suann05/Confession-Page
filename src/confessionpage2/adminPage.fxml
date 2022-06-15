@@ -19,7 +19,7 @@
         </columns>
       </TableView>
       <ImageView fx:id="displayImage" fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="backButton" layoutX="8.0" layoutY="25.0" mnemonicParsing="false" onAction="#backButton" style="-fx-background-color: d8c3a5;" text="&lt;Back" textFill="#5d5c61" AnchorPane.bottomAnchor="649.6666666666666" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="1008.0" AnchorPane.topAnchor="25.0">
+      <Button fx:id="backButton" layoutX="8.0" layoutY="25.0" mnemonicParsing="false" onAction="#backButton" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: d8c3a5;" text="&lt;Back" textFill="#5d5c61" AnchorPane.bottomAnchor="650.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="1002.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font name="Georgia Bold" size="14.0" />
          </font></Button>
