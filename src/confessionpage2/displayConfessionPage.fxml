@@ -9,30 +9,35 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.DisplayConfessionPageController">
+<AnchorPane id="AnchorPane" prefHeight="750.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="confessionpage2.DisplayConfessionPageController">
    <children>
-      <Button fx:id="submitButton" layoutX="383.0" layoutY="646.0" mnemonicParsing="false" onAction="#confessionPage" style="-fx-background-color: d8c3a5;" text="Click here to submit your confession">
+      <Button fx:id="submitButton" layoutX="313.0" layoutY="658.0" mnemonicParsing="false" onAction="#confessionPage" style="-fx-background-color: d8c3a5;" text="Click here to submit your confession">
          <font>
             <Font name="Georgia" size="18.0" />
          </font></Button>
-      <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" onMouseClicked="#showImage" prefHeight="539.0" prefWidth="805.0">
+      <TableView fx:id="tableView" layoutX="8.0" layoutY="96.0" onMouseClicked="#showImage" prefHeight="539.0" prefWidth="922.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="81.59997367858887" style="-fx-background-color: eae7dc;" text="ID" />
-          <TableColumn fx:id="confessionCol" prefWidth="475.0" style="-fx-background-color: eae7dc;" text="CONFESSION" />
-            <TableColumn fx:id="replyIDCol" prefWidth="91.199951171875" style="-fx-background-color: eae7dc;" text="REPLYID" />
+          <TableColumn fx:id="confessionCol" prefWidth="568.0000305175781" style="-fx-background-color: eae7dc;" text="CONFESSION" />
+            <TableColumn fx:id="replyIDCol" prefWidth="118.39996337890625" style="-fx-background-color: eae7dc;" text="REPLYID" />
             <TableColumn fx:id="dateCol" prefWidth="154.4000244140625" style="-fx-background-color: eae7dc;" text="DATE" />
         </columns>
       </TableView>
-      <ImageView fx:id="displayImage" fitHeight="183.0" fitWidth="227.0" layoutX="833.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="199.0" layoutY="55.0" text="Search" textFill="#5d5c61">
+      <ImageView fx:id="displayImage" fitHeight="430.0" fitWidth="544.0" layoutX="944.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="173.0" layoutY="44.0" text="Search" textFill="#5d5c61">
          <font>
             <Font name="Georgia Bold" size="18.0" />
          </font></Label>
-      <TextField fx:id="searchTextField" layoutX="272.0" layoutY="52.0" prefHeight="34.0" prefWidth="534.0" />
-      <Button fx:id="logoutButton" layoutX="921.0" layoutY="651.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: d8c3a5;" text="Log Out">
+      <TextField fx:id="searchTextField" layoutX="262.0" layoutY="37.0" prefHeight="34.0" prefWidth="534.0" />
+      <Button fx:id="logoutButton" layoutX="1153.0" layoutY="662.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: d8c3a5;" text="Log Out" textFill="#5d5c61">
          <font>
             <Font name="Georgia Bold" size="14.0" />
          </font>
       </Button>
+      <Label layoutX="956.0" layoutY="137.0" text="Image : ">
+         <font>
+            <Font name="Georgia" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
