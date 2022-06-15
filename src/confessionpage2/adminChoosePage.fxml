@@ -16,7 +16,7 @@
             <Font name="Georgia Bold" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="logoutButton" layoutX="486.0" layoutY="598.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: d8c3a5;" text="Log Out">
+      <Button fx:id="logoutButton" layoutX="486.0" layoutY="598.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: d8c3a5;" text="Log Out" textFill="#5d5c61">
          <font>
             <Font name="Georgia Bold" size="18.0" />
          </font>
