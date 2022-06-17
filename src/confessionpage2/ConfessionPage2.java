@@ -27,7 +27,7 @@ public class ConfessionPage2 extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try{
-        Parent root = FXMLLoader.load(getClass().getResource("displayPendingConf.fxml")); //first scene is welcomePage.fxml file
+        Parent root = FXMLLoader.load(getClass().getResource("welcomePage.fxml")); //first scene is welcomePage.fxml file
         Scene scene = new Scene(root);
      
         primaryStage.setTitle("CONFESS TIME!"); //set the window title
