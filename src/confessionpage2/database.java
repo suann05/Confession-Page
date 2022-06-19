@@ -606,6 +606,16 @@ public class database {
             preparedStatement = connection.prepareStatement("INSERT INTO confession2 (idconfession,confession,replyid,date,image) SELECT idconfession,confession,replyid,date,image FROM pendingconf");
                
             preparedStatement.executeUpdate();
+            
+            confID.dequeue();
+            confConf.dequeue();
+            confReplyID.dequeue();
+            confDate.dequeue();
+            
+            System.out.println(confID.toString());
+            System.out.println(confConf.toString());
+            System.out.println(confReplyID.toString());
+            System.out.println(confDate.toString());
                
             
         }catch(SQLException e){
