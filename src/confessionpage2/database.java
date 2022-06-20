@@ -544,7 +544,7 @@ public class database {
         
         };
         
-        timer.schedule(task, 1000); //pop out every 15mins
+        timer.schedule(task, 900000); //pop out every 15mins
             
         }else if(count<=10){ //less than or equal to 10
             
@@ -611,11 +611,6 @@ public class database {
             confConf.dequeue();
             confReplyID.dequeue();
             confDate.dequeue();
-            
-            System.out.println("ID queue : "+confID.toString());
-            System.out.println("Confession queue : "+confConf.toString());
-            System.out.println("Reply ID queue : "+confReplyID.toString());
-            System.out.println("Published data queue : "+confDate.toString());
                
             
         }catch(SQLException e){
