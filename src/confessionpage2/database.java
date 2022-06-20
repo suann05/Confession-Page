@@ -97,10 +97,10 @@ public class database {
                     confReplyID.enqueue(null);
                     confDate.enqueue(date); 
                     
-                    System.out.println(confID.toString());
-                    System.out.println(confConf.toString());
-                    System.out.println(confReplyID.toString());
-                    System.out.println(confDate.toString());
+                    System.out.println("ID queue : "+confID.toString());
+                    System.out.println("Confession queue : "+confConf.toString());
+                    System.out.println("Reply ID queue : "+confReplyID.toString());
+                    System.out.println("Published data queue : "+confDate.toString());
                     
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
@@ -180,10 +180,10 @@ public class database {
                     confReplyID.enqueue(null);
                     confDate.enqueue(date); 
                     
-                    System.out.println(confID.toString());
-                    System.out.println(confConf.toString());
-                    System.out.println(confReplyID.toString());
-                    System.out.println(confDate.toString());
+                    System.out.println("ID queue : "+confID.toString());
+                    System.out.println("Confession queue : "+confConf.toString());
+                    System.out.println("Reply ID queue : "+confReplyID.toString());
+                    System.out.println("Published data queue : "+confDate.toString());
                     
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
@@ -365,10 +365,10 @@ public class database {
                     confReplyID.enqueue(replyid);
                     confDate.enqueue(date); 
                     
-                    System.out.println(confID.toString());
-                    System.out.println(confConf.toString());
-                    System.out.println(confReplyID.toString());
-                    System.out.println(confDate.toString());
+                    System.out.println("ID queue : "+confID.toString());
+                    System.out.println("Confession queue : "+confConf.toString());
+                    System.out.println("Reply ID queue : "+confReplyID.toString());
+                    System.out.println("Published data queue : "+confDate.toString());
                     
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
@@ -462,10 +462,10 @@ public class database {
                     confReplyID.enqueue(replyid);
                     confDate.enqueue(date); 
                     
-                    System.out.println(confID.toString());
-                    System.out.println(confConf.toString());
-                    System.out.println(confReplyID.toString());
-                    System.out.println(confDate.toString());
+                    System.out.println("ID queue : "+confID.toString());
+                    System.out.println("Confession queue : "+confConf.toString());
+                    System.out.println("Reply ID queue : "+confReplyID.toString());
+                    System.out.println("Published data queue : "+confDate.toString());
                     
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Submitted at "+date+"\nConfession post ID : "+id+"\nYour confession will be published soon.");
@@ -544,7 +544,7 @@ public class database {
         
         };
         
-        timer.schedule(task, 900000); //pop out every 15mins
+        timer.schedule(task, 1000); //pop out every 15mins
             
         }else if(count<=10){ //less than or equal to 10
             
@@ -612,10 +612,10 @@ public class database {
             confReplyID.dequeue();
             confDate.dequeue();
             
-            System.out.println(confID.toString());
-            System.out.println(confConf.toString());
-            System.out.println(confReplyID.toString());
-            System.out.println(confDate.toString());
+            System.out.println("ID queue : "+confID.toString());
+            System.out.println("Confession queue : "+confConf.toString());
+            System.out.println("Reply ID queue : "+confReplyID.toString());
+            System.out.println("Published data queue : "+confDate.toString());
                
             
         }catch(SQLException e){
